@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     async store(req, res) {
+       
         let encPassword = null;
         bcrypt.hash(req.body.password, 2).then((data) => {
             encPassword = data
@@ -11,32 +12,29 @@ module.exports = {
         })
         const userExists = await User.findOne({ email: req.body.email });
         if (userExists) {
-            return res.send(userExists);
+            await bcrypt.compare(req.body.password, userExists.password, (error) => {
+                return res.send(userExists);
+
+            })
+           
+        }else{
+            if(req.body.name){
+                const user = new User({
+                    email: req.body.email,
+                    password: encPassword,
+                    name: req.body.name,
+                    username: req.body.username
+                })
+                await user.save();
+                res.send(user);
+
+            }
+
+              console.log("User not found");
+
         }
-        const user = new User({
-            email: req.body.email,
-            password: encPassword,
-            name: req.body.name,
-            username: req.body.username
-        })
-        await user.save();
-        console.log(user);
-        res.send(user);
+
+
     },
 
-    async read(req, res) {
-       
-        const user = await User.findOne({ email: req.body.email });
-              if(!user){
-                  console.log('User not found');
-              }
-              await bcrypt.compare(req.body.password, user.password, (error) => {
-        
-                res.send(user)
-            
-        })
-      
-
-
-    }
 }

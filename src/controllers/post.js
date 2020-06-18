@@ -5,13 +5,13 @@ const { findById } = require('../models/Post');
 
 module.exports = {
     async store(req,res){
-        const {user_id} =req.headers;
+        const {user} =req.headers;
         const{title,body} = req.body;
-        const post = new Post({title,body,authorId:user_id});
+        const post = new Post({title,body,authorId:user});
 
         try{
             await post.save();
-            const loggedUser = await User.findById(user_id);
+            const loggedUser = await User.findById(user);
             await loggedUser.postsId.push(post._id);
             await loggedUser.save();
 
@@ -31,7 +31,7 @@ module.exports = {
       if(!posts){
         return console.log("You haven't post anything yet")
       }
-      console.log(posts)
+      
     return res.send(posts)
  
     

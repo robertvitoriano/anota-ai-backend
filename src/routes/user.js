@@ -3,11 +3,10 @@ const userController = require('../controllers/user');
 
 const userRouter = express.Router();
 
-//Sign up
+//Sign LOG IN
 userRouter.post('/users', userController.store);
 
-//Log in
-userRouter.get('/users',userController.read);
+
 
 
 
