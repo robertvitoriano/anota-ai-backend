@@ -8,7 +8,7 @@ module.exports = {
         const {user} =req.headers;
         const{title,body} = req.body;
         const post = new Post({title,body,authorId:user});
-
+          console.log('esta '+user);
         try{
             await post.save();
             const loggedUser = await User.findById(user);
