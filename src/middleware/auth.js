@@ -11,8 +11,8 @@ const auth = async (req, res, next) => {
                 return res.status(401).json({ msg: "No authentication token, authorization denied." });
            }
 
-        const[,token] =  authToken.split(' ');
-        const validToken = jwt.verify(token, 'mysecret');
+        // const[,token] =  authToken.split(' ');
+        const validToken = jwt.verify(authToken, 'mysecret');
         
         if (!validToken)
             {
