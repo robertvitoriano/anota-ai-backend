@@ -22,7 +22,7 @@ module.exports = {
         try {
             const user = await User.findByCredentials(req.body.email, req.body.password)
             const token = await user.generateAuthToken();
-              console.log(token)
+
             res.send({
                 token,
                 user
