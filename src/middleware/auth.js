@@ -4,8 +4,7 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
     try {
-        const authToken = req.headers.authorization;
-        console.log(authToken);
+        const authToken = req.headers.Authorization;
         if (!authToken)
            {
 
@@ -13,7 +12,6 @@ const auth = async (req, res, next) => {
            }
 
         const[,token] =  authToken.split(' ');
-        console.log(token);
         const validToken = jwt.verify(token, 'mysecret');
         
         if (!validToken)
@@ -33,7 +31,8 @@ const auth = async (req, res, next) => {
 
     } 
     catch (e) {
-        res.status(401).json(e);
+        res.status(401).json({ErrorMessage:e});
+        
     }
 };
 
