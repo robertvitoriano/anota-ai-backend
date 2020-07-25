@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
     try {
-        const authToken = req.headers.authorization;
+        const authToken = req.headers.userAuth;
         if (!authToken)
            {
 
