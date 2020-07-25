@@ -1,19 +1,25 @@
 {
-  "name": "criaBlog",
+  "name": "anotaAi",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/server.js",
     "start": "node src/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.9.16"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.16",
+    "validator": "^13.1.1"
   },
-    "engines": {
-      "node": "12.x"
-    }
+  "engines": {
+    "node": "12.x"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
+  }
 }

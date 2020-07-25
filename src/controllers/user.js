@@ -1,40 +1,48 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const auth = require('../middleware/auth')
 
 module.exports = {
     async store(req, res) {
-       
-        let encPassword = null;
-        bcrypt.hash(req.body.password, 2).then((data) => {
-            encPassword = data
-        }).catch(e => {
-            console.log("It could not encrypt");
-        })
-        const userExists = await User.findOne({ email: req.body.email });
-        if (userExists) {
-            await bcrypt.compare(req.body.password, userExists.password, (error) => {
-                return res.send(userExists);
+        const user = new User(req.body);
+        try {
+            await user.save();
+            const token = await user.generateAuthToken();
 
+            res.status(201).send({
+                token,
+                user
             })
-           
-        }else{
-            if(req.body.name){
-                const user = new User({
-                    email: req.body.email,
-                    password: encPassword,
-                    name: req.body.name,
-                    username: req.body.username
-                })
-                await user.save();
-                res.send(user);
+            
+        } catch (e) {
+            res.status(400).send(e);
+        }
 
-            }
+    },
+    async login(req, res) {
+        try {
+            const user = await User.findByCredentials(req.body.email, req.body.password)
+            const token = await user.generateAuthToken();
 
-              console.log("User not found");
+            res.send({
+                token,
+                user
+            })
 
+
+            
+        } catch (e) {
+            res.status(400).send();
+        }
+    },
+
+    
+    async index(req, res) {
+        //do middleware auth
+        const user = req.user;
+            res.send(user);
         }
 
 
-    },
 
 }
+

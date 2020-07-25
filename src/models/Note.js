@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Post = new Schema({
+const Note = new Schema({
     title:{
         type:String,
         required:true
@@ -18,6 +18,6 @@ const Post = new Schema({
 
 },{timestamps:true})
 
-const post = mongoose.model('post',Post);
+const note = mongoose.model('note',Note);
 
-module.exports = post;
+module.exports = note;

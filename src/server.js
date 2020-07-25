@@ -1,14 +1,16 @@
 express = require('express');
 const cors = require('cors');
 const router = require('./routes/router.js');
-
+require('./database/connection');
 app = express();
- require('./database/connection');
-app.use(express.json());
+const PORT  = process.env.PORT
+
 app.use(cors());
+app.use(express.json());
 app.use(router);
 
 
-app.listen(4000,()=>{
-    console.log("My App is running on port 4000");
+
+app.listen(PORT,()=>{
+    console.log("My App is running on port "+PORT);
 })
