@@ -33,12 +33,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }],
+    // tokens: [{
+    //     token: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }],
     notesId: [{
         type: Schema.Types.ObjectId,
         ref: 'Note'
@@ -55,7 +55,6 @@ userSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign({ _id: user._id.toString() }, 'mysecret');
 
-    user.tokens.push({ token: token });
     await user.save();
     return token
 }

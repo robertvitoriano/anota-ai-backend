@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
 
                 return res.status(401).json({ msg: "Token verification failed, authorization denied." });
             }
-            const user = await User.findOne({_id:validToken._id,'tokens.token':token});
+            const user = await User.findOne({_id:validToken._id});
             if(!user){
                 console.log('User not found');
             }
