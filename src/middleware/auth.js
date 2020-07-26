@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
         const authToken = req.headers.userauth;
         console.log('Esse é o token '+ req.headers.userauth);
         if (!authToken)
-           {
+           {//fdf
 
                 return res.status(401).json({ msg: "No authentication token, authorization denied." });
            }
