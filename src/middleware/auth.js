@@ -25,6 +25,7 @@ const auth = async (req, res, next) => {
                 console.log('User not found');
             }
             req.user=user;
+            console.log(user);
 
             next();
 
