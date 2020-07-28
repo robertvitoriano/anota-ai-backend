@@ -10,12 +10,12 @@ userRouter.post('/users/login', userController.login);
 
 // userRouter.use(auth)
 
-userRouter.get('/users/me',auth, userController.index);
+userRouter.get('/users/me', auth, userController.index);
 
 
 
 
 
-//
+
 
 module.exports = userRouter;
