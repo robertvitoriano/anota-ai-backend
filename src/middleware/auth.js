@@ -5,7 +5,7 @@ const User = require('../models/User');
 const auth = async (req, res, next) => {
     try {
         const authToken = req.headers.userauth;
-        console.log('Esse é o token '+ req.headers.userauth);
+        // console.log('Esse é o token '+ req.headers.userauth);
         if (!authToken)
            {//fdf
 
@@ -14,18 +14,19 @@ const auth = async (req, res, next) => {
 
         // const[,token] =  authToken.split(' ');
         const validToken = jwt.verify(authToken, 'mysecret');
-        
+        console.log(validToken);
         if (!validToken)
             {
 
                 return res.status(401).json({ msg: "Token verification failed, authorization denied." });
             }
             const user = await User.findOne({_id:validToken._id});
+            console.log(user);
             if(!user){
                 console.log('User not found');
             }
             req.user=user;
-            console.log(user);
+           
 
             next();
 
