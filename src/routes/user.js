@@ -8,9 +8,9 @@ const auth = require('../middleware/auth')
 userRouter.post('/users', userController.store);
 userRouter.post('/users/login', userController.login);
 
-userRouter.use(auth)
+// userRouter.use(auth)
 
-userRouter.get('/users/me', userController.index);
+userRouter.get('/users/me',auth, userController.index);
 
 
 

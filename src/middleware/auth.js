@@ -1,45 +1,81 @@
 
+const jwt = require("jsonwebtoken");
 const User = require('../models/User');
 
-const jwt = require('jsonwebtoken');
-    const authConfig = require('../config/authConfig.json');
+const auth = async (req, res, next) => {
+    try {
+        const authToken = req.headers.userauth;
+        console.log('Esse é o token '+ req.headers.userauth);
+        if (!authToken)
+           {//fdf
 
-    module.exports = (req, res, next) => {
-        const authHeader = req.headers.authorization;
+                return res.status(401).json({ msg: "No authentication token, authorization denied." });
+           }
 
-        if (!authHeader)
-            return res.status(401).send({ error: 'No token provided' });
+        // const[,token] =  authToken.split(' ');
+        const validToken = jwt.verify(authToken, 'mysecret');
+        
+        if (!validToken)
+            {
 
-        const parts = authHeader.split(' ');
+                return res.status(401).json({ msg: "Token verification failed, authorization denied." });
+            }
+            const user = await User.findOne({_id:validToken._id});
+            if(!user){
+                console.log('User not found');
+            }
 
-        if (!parts.length === 2)
-            return res.status(401).send({ error: 'Token error' });
+            req.user=user;
 
-        const [scheme, token] = parts;
+            next();
 
-        if (!/^Bearer$/i.test(scheme))
-            return res.status(401).send({ error: 'Token malformatted' });
 
-        jwt.verify(token, authConfig.secret, (err, decoded) => {
-            if (err) return res.status(401).send({ error: 'Token invalid' });
+    } 
+// const jwt = require('jsonwebtoken');
+//     const authConfig = require('../config/authConfig.json');
 
-            req.userId = decoded.id;
+//     module.exports = (req, res, next) => {
+//         const authHeader = req.headers.authorization;
 
-            return next();
-        })
+//         if (!authHeader)
+//             return res.status(401).send({ error: 'No token provided' });
+
+//         const parts = authHeader.split(' ');
+
+//         if (!parts.length === 2)
+//             return res.status(401).send({ error: 'Token error' });
+
+//         const [scheme, token] = parts;
+
+//         if (!/^Bearer$/i.test(scheme))
+//             return res.status(401).send({ error: 'Token malformatted' });
+
+//         jwt.verify(token, authConfig.secret, (err, decoded) => {
+//             if (err) return res.status(401).send({ error: 'Token invalid' });
+
+//             req.userId = decoded.id;
+
+//             return next();
+//         })
+//     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    catch (e) {
+        res.status(401).json({ErrorMessage:e});
+        
     }
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = jwt;
+module.exports = auth;
