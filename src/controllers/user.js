@@ -28,7 +28,7 @@ module.exports = {
                 user
             })
 
-
+   console.log(token)
             
         } catch (e) {
             res.status(400).send();
