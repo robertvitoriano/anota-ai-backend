@@ -35,33 +35,27 @@ module.exports = {
   },
 
   async update(req,res){
-    // espera que o ID esteja na barra de endereço
-
-    const updates = Object.keys(req.body);
-    const allowedUpdates = ['title','body'];
-    const isValidOperation = updates.every((update)=>{
-      allowedUpdates.includes(update);
-    })
-    if(!isValidOperation){
-      return res.status(400).send({'error':'invalid updates!'})
-    }
     
     try{
       const note = await Note.findById(req.params.id);
-      updates.forEach((update)=>{
-      note[update] = req.body[update]
-      })
+      note.title = req.body.title;
+      note.body = req.body.body;
       await note.save();
-
-      if(!note){
-        return res.status(404).send();
-      }
-
+      return res.send(note);
     }
     catch(e){
       res.status(400).send(e);
     }
 
-  }
+  },
 
+  async read(req,res){
+    try{
+      const note = await Note.findById(req.params.id);
+      res.send(note);
+    }
+    catch(e){
+      res.status(400).send(e);
+    }
+  }
 }
