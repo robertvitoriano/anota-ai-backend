@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 
 noteRouter.post('/notes', auth, noteController.store)
 noteRouter.get('/notes', auth, noteController.index);
-noteRouter.patch('/notes/:id', auth, noteController.update);
+noteRouter.post('/notes/:id', auth, noteController.update);
 noteRouter.get('/notes/:id', auth, noteController.read);
 
 module.exports = noteRouter;
