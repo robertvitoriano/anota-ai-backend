@@ -57,5 +57,16 @@ module.exports = {
     catch(e){
       res.status(400).send(e);
     }
+  },
+
+    async delete(req, res) {
+    try {
+      const note = await Note.deleteOne({ _id: req.params.id});
+      res.send();
+
+    }
+    catch (e) {
+      res.status(400).send(e);
+    }
   }
 }
