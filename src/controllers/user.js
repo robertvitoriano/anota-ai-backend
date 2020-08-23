@@ -8,8 +8,8 @@ module.exports = {
             user.email===req.body.email
             console.log(user);
         });
-        console.log(req.body);
-        if (!emailExists){
+
+        if (emailExists.length===0){
             try {
                 const user = new User(req.body);
                 await user.save();
