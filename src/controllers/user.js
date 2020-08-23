@@ -5,7 +5,7 @@ module.exports = {
     async store(req, res) {
         const users =  await User.find();
         const emailExists =  users.filter(user=>{user.email===req.body.email});
-        if(!email){
+        if (!emailExists){
             try {
                 const user = new User(req.body);
                 await user.save();
