@@ -4,9 +4,11 @@ const auth = require('../middleware/auth')
 module.exports = {
     async store(req, res) {
         const users =  await User.find();
-        const emailExists =  users.filter(user=>{user.email===req.body.email});
+        const emailExists =  users.filter(user=>{
+            user.email===req.body.email
+            console.log(user);
+        });
         console.log(req.body);
-        console.log(users);
         if (!emailExists){
             try {
                 const user = new User(req.body);
