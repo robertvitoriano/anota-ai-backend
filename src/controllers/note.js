@@ -12,9 +12,7 @@ module.exports = {
             const loggedUser = await User.findById(user._id);
           console.log(loggedUser)
 
-            if(!loggedUser){
-              console.log('Não há usuário logado')
-            }
+        
             await loggedUser.notesId.push(note._id);
             await loggedUser.save();
             res.send(note);
