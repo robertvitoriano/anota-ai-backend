@@ -3,20 +3,27 @@ const auth = require('../middleware/auth')
 
 module.exports = {
     async store(req, res) {
-        const user = new User(req.body);
-        console.log(user);
-        try {
-            await user.save();
-            const token = await user.generateAuthToken();
+        const users =  await User.find();
+        const emailExists =  users.filter(user=>{user.email===req.body.email});
+        if(!email){
+            try {
+                const user = new User(req.body);
+                await user.save();
+                const token = await user.generateAuthToken();
 
-            res.status(201).send({
-                token,
-                user
-            })
-            
-        } catch (e) {
-            res.status(400).send(e);
-            console.log(e);
+                res.status(201).send({
+                    token,
+                    user
+                })
+
+            } catch (e) {
+                res.status(400).send(e);
+                console.log(e);
+            }
+
+        }else{
+            res.status(400).send({message:'Email already taken!'});
+            console.log('Email already taken');
         }
 
     },
@@ -40,8 +47,16 @@ module.exports = {
     
     async index(req, res) {
         //do middleware auth
-        const user = req.user;
-            res.send(user);
+ try {
+     const users = await User.find();
+       console.log('it works');
+     console.log(users);
+     res.send(users)
+ } catch (error) {
+     console.log(error);
+ }
+
+      
         }
 
 
