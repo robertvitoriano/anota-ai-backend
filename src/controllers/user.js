@@ -59,7 +59,14 @@ module.exports = {
     }
   },
     async logout(req, res) {
-        
+        try {
+            req.user.token = '';
+            await req.user.save();
+            res.send()
+        } catch (error) {
+
+            res.status(500).send();
+        }
 
     }
 };
