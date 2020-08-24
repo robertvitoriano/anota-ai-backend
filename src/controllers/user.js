@@ -60,7 +60,7 @@ module.exports = {
   },
     async logout(req, res) {
         try {
-            console.log(req.headers);
+            console.log(req);
             await req.user.save();
             res.send()
         } catch (error) {
