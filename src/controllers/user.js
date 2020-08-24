@@ -60,7 +60,7 @@ module.exports = {
   },
     async logout(req, res) {
         try {
-            console.log(req);
+            req.body.headers.userauth ='apagado';
             await req.user.save();
             res.send()
         } catch (error) {
