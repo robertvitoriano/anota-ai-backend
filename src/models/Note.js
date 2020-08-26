@@ -18,7 +18,7 @@ const Note = new Schema({
     },
     categoryId:{
         type:Schema.Types.ObjectId,
-        default:"Nenhuma"
+        default:null
     }
 },{timestamps:true})
 

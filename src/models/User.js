@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     }],
     categoriesId: [{
         type: Schema.Types.ObjectId,
-        ref: null
+        ref: 'Category'
     }],
 },
     {
