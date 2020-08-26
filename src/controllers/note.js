@@ -9,11 +9,12 @@ module.exports = {
         const note = new Note({title,body,authorId:user._id});
         try{
             await note.save();
-
             const loggedUser = await User.findById(user._id);
+          console.log(loggedUser)
+
+        
             await loggedUser.notesId.push(note._id);
             await loggedUser.save();
-            
             res.send(note);
 
         }catch(e){
@@ -24,6 +25,7 @@ module.exports = {
   async index (req,res){
       const  user  = req.user;
       const notes = await Note.find({authorId:user._id});
+      console.log(notes);
       if(!notes){
         return console.log("You haven't post anything yet")
       }
