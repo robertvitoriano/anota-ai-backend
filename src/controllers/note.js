@@ -9,12 +9,11 @@ module.exports = {
         const note = new Note({title,body,authorId:user._id});
         try{
             await note.save();
-            const loggedUser = await User.findById(user._id);
-          console.log(loggedUser)
 
-        
+            const loggedUser = await User.findById(user._id);
             await loggedUser.notesId.push(note._id);
             await loggedUser.save();
+            
             res.send(note);
 
         }catch(e){

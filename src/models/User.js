@@ -28,23 +28,19 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-
     password: {
         type: String,
         required: true
     },
-    // tokens: [{
-    //     token: {
-    //         type: String,
-    //         required: true
-    //     }
-    // }],
     notesId: [{
         type: Schema.Types.ObjectId,
         ref: 'Note'
     }],
+    categoriesId: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Category'
+    }],
 },
-
     {
         timestamps: true
     })
