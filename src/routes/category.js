@@ -5,4 +5,8 @@ const auth = require('./../middleware/auth')
 CategoryRouter.use(auth);
 
 
-CategoryRouter.post('/:userId/create-category',CategoryController.store);
+CategoryRouter.post('/:userId/categories',CategoryController.store);
+CategoryRouter.get('/:userId/categories', CategoryController.list);
+CategoryRouter.get('/:userId/categories/:categoryId', CategoryController.index);
+
+module.exports = CategoryRouter;
