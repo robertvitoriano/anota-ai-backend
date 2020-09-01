@@ -1,6 +1,5 @@
 const Note =require('../models/Note');
 const User = require('../models/User');
-const { update } = require('../models/Note');
 
 module.exports = {
     async store(req,res){
@@ -9,10 +8,7 @@ module.exports = {
         const note = new Note({title,body,authorId:user._id});
         try{
             await note.save();
-            const loggedUser = await User.findById(user._id);
-          console.log(loggedUser)
-
-        
+            const loggedUser = await User.findById(user._id);        
             await loggedUser.notesId.push(note._id);
             await loggedUser.save();
             res.send(note);
