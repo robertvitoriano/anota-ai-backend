@@ -53,8 +53,21 @@ module.exports = {
            
            
        }
+   },
+   async associate(req,res){
+       try {
+           const {noteId} = req.body;
+           const {categoryId} = req.params;
+           const category =  await CategoryModel.findById(categoryId);
+           await category.notesId.push(noteId);
+           
+       } catch  {
+           
+       }
 
 
-   }
+
+   },
+
 
 }
