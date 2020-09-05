@@ -1,7 +1,7 @@
 const CategoryModel = require('./../models/Category');
 const UserModel = require('./../models/User');
-const { index } = require('./note');
-const { listIndexes } = require('./../models/User');
+const NoteModel = require('./../models/Note')
+
 module.exports = {
     async store(req,res){
         const user = req.user;
@@ -58,15 +58,14 @@ module.exports = {
        try {
            const {noteId} = req.body;
            const {categoryId} = req.params;
-           const category =  await CategoryModel.findById(categoryId);
-           await category.notesId.push(noteId);
+           const note =  await NoteModel.findByIdAndUpdate(noteId,{categoryId:categoryId});
+           await note.save();
+           res.send(note);
+
            
        } catch  {
            
        }
-
-
-
    },
 
 
