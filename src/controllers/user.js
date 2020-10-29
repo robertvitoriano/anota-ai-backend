@@ -3,6 +3,7 @@ const auth = require("../middleware/auth");
 
 module.exports = {
   async store(req, res) {
+    console.log("esse é o body",req.body);
     const users = await User.find();
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
