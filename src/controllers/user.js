@@ -6,6 +6,7 @@ module.exports = {
     console.log("esse é o body",req.body);
     const users = await User.find();
     const user = new User(req.body);
+    console.log(User)
     console.log("instancia de user",user);
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
