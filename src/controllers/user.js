@@ -5,6 +5,8 @@ module.exports = {
   async store(req, res) {
     console.log("esse é o body",req.body);
     const users = await User.find();
+    const user = new User(req.body);
+    console.log(user);
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
       console.log(user);
@@ -15,7 +17,6 @@ module.exports = {
         const user = new User(req.body);
         await user.save();
         const token = await user.generateAuthToken();
-        console.log(user,token)
 
         res.status(201).send({
           token,
