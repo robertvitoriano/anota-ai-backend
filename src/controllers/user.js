@@ -41,7 +41,7 @@ module.exports = {
       );
       const token = await user.generateAuthToken();
       console.log(user);
-      res.send({
+      res.status(200).send({
         token,
         user,
       });
