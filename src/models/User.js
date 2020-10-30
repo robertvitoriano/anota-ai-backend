@@ -48,7 +48,6 @@ const userSchema = new mongoose.Schema({
 
 //acessível em instancia
 userSchema.methods.generateAuthToken = async function () {
-
     const user = this;
     const token = jwt.sign({ _id: user._id.toString() }, 'mysecret');
     await user.save();
