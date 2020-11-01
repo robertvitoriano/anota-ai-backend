@@ -33,7 +33,7 @@ module.exports = {
            const category = await CategoryModel.findById(categoryId);
            const notes = await NoteModel.find({categoryId:categoryId});
            console.log(notes);
-           res.send(category,notes);
+           res.send({category:category,notes:notes});
            
        } catch (error) {
            res.status(400).send(error);
