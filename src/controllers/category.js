@@ -31,7 +31,9 @@ module.exports = {
        try {
            const categoryId = req.params.categoryId;
            const category = await CategoryModel.findById(categoryId);
-           res.send(category);
+           const notes = await NoteModel.find({categoryId:categoryId});
+           console.log(notes);
+           res.send(category,notes);
            
        } catch (error) {
            res.status(400).send(error);

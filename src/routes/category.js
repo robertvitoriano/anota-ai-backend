@@ -11,3 +11,5 @@ CategoryRouter.get('/:userId/categories/:categoryId', CategoryController.index);
 CategoryRouter.post('/categories/:categoryId/associate', CategoryController.associate);
 
 module.exports = CategoryRouter;
+
+
