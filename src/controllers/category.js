@@ -58,11 +58,16 @@ module.exports = {
    },
    async associate(req,res){
        try {
-           const {noteId} = req.body;
+           const {notesId} = req.body;
            const {categoryId} = req.params;
-           const note =  await NoteModel.findByIdAndUpdate(noteId,{categoryId:categoryId});
-           await note.save();
-           res.send(note);
+           let notes = []
+           notesId.map(async(id)=>{
+            const note =  await NoteModel.findByIdAndUpdate(noteId,{categoryId:categoryId});
+            await note.save();
+            notes.push(note)
+           })
+ 
+           res.send(notes);
 
            
        } catch  {
