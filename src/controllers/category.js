@@ -62,10 +62,11 @@ module.exports = {
            const {categoryId} = req.params;
            let notes = []
            notesId.map(async(id)=>{
-            const note =  await NoteModel.findByIdAndUpdate(id,{categoryId:categoryId});
+            const note =  await NoteModel.findByIdAndUpdate(id);
             await note.save();
             notes.push(note)
            })
+           console.log(notes);
  
            res.send(notes);
 
