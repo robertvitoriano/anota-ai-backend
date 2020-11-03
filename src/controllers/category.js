@@ -48,19 +48,31 @@ module.exports = {
       const { categoryId } = req.params;
       
 
-      const findAllNotes = async (notesId) => {
+      const findAllNotes = (notesId) => {
 
         return notesId.map((id) => {
-          const note =  NoteModel.findByIdAndUpdate(id);
-          return note;
+          return  NoteModel.findByIdAndUpdate(id);
+          
         });
       };
+      const saveNotes = (note) =>{
+        return notesId.map((note) => {
+            return note.save();
+          });
+
+      }
 
     const notes =   await Promise.all(findAllNotes(notesId));
+    await Promise.all(saveNotes(notesId))
+   const updatedNotes =   notes.map((note)=>{
+       note.categoryId = categoryId
+       return note;
+   })
+   console.log(updatedNotes)
 
-      console.log(notes);
+    console.log("Essas são as anotaçãoes",updatedNotes);
 
-      res.send(notes);
+      res.send(updatedNotes);
     } catch {}
   },
 };
