@@ -59,12 +59,12 @@ module.exports = {
       };
 
       const notes = await Promise.all(findAllNotes(notesId));
-      await Promise.all(saveNotes(notesId));
+      
       const updatedNotes = notes.map((note) => {
         note.categoryId = categoryId;
         return note;
       });
-      console.log(updatedNotes);
+      await Promise.all(saveNotes(updatedNotes));
 
       console.log("Essas são as anotaçãoes", updatedNotes);
 
