@@ -52,8 +52,8 @@ module.exports = {
           return NoteModel.findByIdAndUpdate(id);
         });
       };
-      const saveNotes = (note) => {
-        return notesId.map((note) => {
+      const saveNotes = (notes) => {
+        return notes.map((note) => {
           return note.save();
         });
       };
