@@ -62,7 +62,7 @@ module.exports = {
            const {categoryId} = req.params;
            let notes = []
            notesId.map(async(id)=>{
-            const note =  await NoteModel.findByIdAndUpdate(noteId,{categoryId:categoryId});
+            const note =  await NoteModel.findByIdAndUpdate(id,{categoryId:categoryId});
             await note.save();
             notes.push(note)
            })
