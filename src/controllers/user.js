@@ -3,15 +3,11 @@ const auth = require("../middleware/auth");
 
 module.exports = {
   async store(req, res) {
-    console.log("esse é o body",req.body);
     const users = await User.find();
 
     const user = new User(req.body);
-    console.log(user)
-    console.log("instancia de user",user);
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
-      console.log(user);
     });
 
     if (emailExists.length === 0) {
@@ -40,7 +36,6 @@ module.exports = {
         req.body.password
       );
       const token = await user.generateAuthToken();
-      console.log(user);
       res.status(200).send({
         token,
         user,
@@ -56,8 +51,6 @@ module.exports = {
     //do middleware auth
     try {
       const users = await User.find();
-      console.log("it works");
-      console.log(users);
       res.send(users);
     } catch (error) {
       console.log(error);

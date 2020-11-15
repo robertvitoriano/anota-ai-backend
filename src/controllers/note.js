@@ -17,7 +17,6 @@ module.exports = {
   async index(req, res) {
     const user = req.user;
     const notes = await Note.find({ authorId: user._id });
-    console.log(notes);
     if (!notes) {
       return console.log("You haven't post anything yet");
     }

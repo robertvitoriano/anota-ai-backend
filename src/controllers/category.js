@@ -26,7 +26,6 @@ module.exports = {
       const categoryId = req.params.categoryId;
       const category = await CategoryModel.findById(categoryId);
       const notes = await NoteModel.find({ categoryId: categoryId });
-      console.log(notes);
       res.send({ category: category, notes: notes });
     } catch (error) {
       res.status(400).send(error);
@@ -49,7 +48,7 @@ module.exports = {
 
       const findAllNotes = (notesId) => {
         return notesId.map((id) => {
-          return NoteModel.findByIdAndUpdate(id);
+          return NoteModel.findById(id);
         });
       };
       const saveNotes = (notes) => {
@@ -66,9 +65,27 @@ module.exports = {
       });
       await Promise.all(saveNotes(updatedNotes));
 
-      console.log("Essas são as anotaçãoes", updatedNotes);
 
       res.send(updatedNotes);
     } catch {}
+  },
+  async remove(req, res) {
+    try {
+      const { notesId } = req.body;
+      const removeFromCategory = (notesId) => {
+
+        return notesId.map((id) => {
+          return NoteModel.findOneAndUpdate({_id:id},{categoryId:null}).exec();
+
+        });
+      };
+
+      const notes = await Promise.all(removeFromCategory(notesId));
+
+      res.send(notes);
+    } catch(e) {
+      console.log(e);
+
+    }
   },
 };
