@@ -14,7 +14,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
 
             console.log(`Trying to send Email to ${user.mail}`)
 
-            const transporter = mailer.findcreateTransport({
+            const transporter = mailer.createTransport({
                 service: 'gmail',
                 auth: {
                     user: process.env.EMAIL,
