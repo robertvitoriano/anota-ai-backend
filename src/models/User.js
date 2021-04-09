@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema({
         }
     },
     receivedEmail:{
-        type:Boolean
+        type:Boolean,
+        required: true,
+        default:true
+
     },
     password: {
         type: String,
