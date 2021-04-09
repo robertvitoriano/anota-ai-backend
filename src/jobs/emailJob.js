@@ -16,6 +16,8 @@ const emailJob =  new CronJob('* * * * *', async () => {
 
             const transporter = mailer.createTransport({
                 service: 'gmail',
+                port: 465,
+                secure: true, // true for 465, false for other ports
                 auth: {
                     user: process.env.EMAIL,
                     pass: process.env.EMAIL_PASSWORD
