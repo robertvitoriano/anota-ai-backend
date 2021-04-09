@@ -1,4 +1,4 @@
-const CronJob= require('cron')
+const CronJob= require('cron').CronJob
 const mailer = require('nodemailer')
 const User = require('./../models/User')
 const emailJob =  new CronJob('* * * * *', async () => {
