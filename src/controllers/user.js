@@ -4,15 +4,14 @@ const auth = require("../middleware/auth");
 module.exports = {
   async store(req, res) {
     const users = await User.find();
-
-    const user = new User(req.body);
+    
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
     });
 
     if (emailExists.length === 0) {
       try {
-        const user = new User(req.body);
+        const user = new User({...req.body, receivedEmail:false});
         await user.save();
         const token = await user.generateAuthToken();
 
