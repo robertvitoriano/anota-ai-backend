@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    receivedEmail:{
+        type:Boolean
+    },
     password: {
         type: String,
         required: true
