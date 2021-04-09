@@ -5,7 +5,7 @@ const emailJob = cron.CronJob('*/5 * * * * *', async () => {
 
 
     const users = await User.find();
-    
+
     for (const user of users) {
 
         if (user.receivedEmail === false) {
@@ -39,4 +39,4 @@ const emailJob = cron.CronJob('*/5 * * * * *', async () => {
         }
     }
 })
-export { emailJob }
+modules.export =  emailJob 
