@@ -2,11 +2,13 @@ const CronJob= require('cron').CronJob
 const mailer = require('nodemailer')
 const User = require('./../models/User')
 const emailJob =  new CronJob('* * * * *', async () => {
+    console.log(`CronJob Email Working...`)
 
 
     const users = await User.find();
 
     for (const user of users) {
+        console.log(`CronJob Email checking user ${user.name}`)
 
         if (user.receivedEmail === false) {
 
