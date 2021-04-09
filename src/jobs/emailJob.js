@@ -10,6 +10,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
 
         if (user.receivedEmail === false) {
 
+            console.log(`Trying to send Email to ${user.mail}`)
 
             const transporter = mailer.findcreateTransport({
                 service: 'gmail',
