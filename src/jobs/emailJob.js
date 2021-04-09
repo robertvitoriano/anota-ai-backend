@@ -1,7 +1,7 @@
 const cron = require('cron')
 const mailer = require('nodemailer')
 const User = require('./../models/User')
-const emailJob = cron.CronJob('*/5 * * * * *', async () => {
+const emailJob =  new cron.CronJob('*/5 * * * * *', async () => {
 
 
     const users = await User.find();
