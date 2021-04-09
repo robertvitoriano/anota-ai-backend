@@ -39,4 +39,4 @@ const emailJob = cron.CronJob('*/5 * * * * *', async () => {
         }
     }
 })
-modules.export =  emailJob 
+module.exports =  emailJob 
