@@ -1,10 +1,12 @@
+const  { SECRET_KEY } = require('./../../config/variables')
 const jwt = require("jsonwebtoken");
 const User = require('../models/User');
+
 
 const auth = async (req, res, next) => {
     try {
         const authToken = req.headers.userauth;
-        const decoded = jwt.verify(authToken, 'mysecret');
+        const decoded = jwt.verify(authToken, SECRET_KEY );
         const user = await User.findOne({ _id: decoded._id });
 
          if(!user){

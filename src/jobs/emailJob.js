@@ -1,3 +1,5 @@
+const { EMAIL, EMAIL_PASSWORD } = require('./../../config/variables') 
+
 const CronJob= require('cron').CronJob
 const mailer = require('nodemailer')
 const User = require('./../models/User')
@@ -19,13 +21,13 @@ const emailJob =  new CronJob('* * * * *', async () => {
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.EMAIL_PASSWORD
+                    user: EMAIL,
+                    pass: EMAIL_PASSWORD
                 }
             });
 
             const mailOptions = {
-                from: process.env.EMAIL,
+                from: EMAIL,
                 to: user.email,
                 subject: 'Confirme seu Email',
                 text: 'Código de verificação'
