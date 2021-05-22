@@ -19,7 +19,7 @@ module.exports = {
           return res.status(201).send({
             token,
             user,
-            message:`Em breve um E-mail será  enviado para ${user.email}`
+            message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
       } catch (e) {
         res.status(400).send(e);
@@ -32,6 +32,11 @@ module.exports = {
   },
   async login(req, res) {
     try {
+
+      const { receivedEmail } =  await User.find({email}) 
+
+      if(!receivedEmail) return res.json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, tente novamente"})
+
       const user = await User.findByCredentials(
         req.body.email,
         req.body.password
