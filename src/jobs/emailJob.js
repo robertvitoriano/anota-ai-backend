@@ -24,7 +24,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
                     pass: EMAIL_PASSWORD
                 }
             });
-            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: 'some shit'}, (err, data) => {
+            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `anota-ai-backend.herokuapp.com/email/confirmation/${user._id}`}, (err, data) => {
 
                 if (err)  return  console.error(err);
 

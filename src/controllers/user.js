@@ -76,24 +76,6 @@ module.exports = {
     }
   },
 
-  async confirmEmail(req, res) {
-
-    const { email } = req.body
-
-    const user = User.find(email)
-
-    if(user.confirmed) return res.send.json({message:"Você já confirmou esse e-mail. Va em frente e faça seu login !"})
-
-    user.confirmed = true
-
-    await user.save()
-  
-    res.send.json({message:"Email confirmado com sucesso !"})
-
-
-
-
-  },
 };
 
 //dfdf
