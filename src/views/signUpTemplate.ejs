@@ -1,5 +1,208 @@
 <!DOCTYPE html>
-<div>
+<html>
 
-  <h1>Sign Up Page</h1>
-</div>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Cadastro Anota Aí</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+    integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    .wrapper {
+      height: 100vh;
+      width: 100vw;
+      background-image: url('https://cdn.pixabay.com/photo/2015/11/17/23/33/mail-1048452_960_720.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .custom-card {
+      animation: .8s ease-in slideInFromTop;
+      background-color: white;
+      position: relative;
+      top: 30px;
+      padding: 10px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+
+
+
+    }
+
+    @keyframes slideInFromTop {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(0%);
+      }
+    }
+
+    .field {
+      width: 40vw;
+    }
+
+    .custom-form {
+      margin-bottom: 20px;
+      margin-top: 10vh;
+    }
+
+    .custom-checkbox {
+
+      margin-bottom: 10px;
+    }
+
+    .show-passoword-checkbox {
+      margin-top: 10px;
+    }
+
+    .custom-card-header {
+      width: 100%;
+      height: fit-content;
+      padding: 10px;
+      background-color: #979FA6;
+      position: absolute;
+      top: 0;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<input type="hidden" value=<%-signUpUrl%> class="sign-up-url-input" >
+
+<body style="margin: 0; padding: 0; box-sizing: border-box;">
+
+  <div class="wrapper">
+    <div class="custom-card">
+      <div class="custom-card-header">
+        <h1>Finalize seu cadastro ! </h1>
+      </div>
+      <form class="ui form custom-form">
+        <div class="field">
+          <label>Nome</label>
+          <input type="text" name="name" placeholder="Nome" id="name">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="text" name="email" placeholder="E-mail" readonly id="email" value=<%-email%>>
+        </div>
+        <div class="field">
+          <label>Apelido</label>
+          <input type="text" name="nickname" placeholder="Apelido" id="nickname">
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" name="password" placeholder="senha" id="password">
+          <div class="ui checkbox custom-checkbox show-passoword-checkbox">
+            <input type="checkbox" id="show-password-checkbox">
+            <label>Mostrar Senha </label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Digite sua senha novamente</label>
+          <input type="password" name="password-again" placeholder="Digite novamente sua senha" id="password-again">
+        </div>
+      </form>
+      <div class="ui checkbox custom-checkbox">
+        <input type="checkbox" id="agreement-checkbox">
+        <label>Eu concordo com os termos e condições ! </label>
+      </div>
+      <button class="ui button" type="submit" style="margin: 0 auto;">
+        Finalizar Cadastro
+      </button>
+
+    </div>
+
+
+
+
+  </div>
+  <script>
+    const submitButton = document.querySelector('button')
+    submitButton.addEventListener('click', async () => {
+      const password = document.querySelector('#password').value
+      const passwordAgain = document.querySelector('#password-again').value
+      const name = document.querySelector('#name').value
+      const username = document.querySelector('#nickname').value
+      const email = document.querySelector('#email').value
+      const agreementCheckbox = document.querySelector('#agreement-checkbox')
+
+      if (!agreementCheckbox.checked) return Swal.fire({
+        icon: 'warning',
+        title: 'Você precisa aceitar os termos  e condições para se cadastrar',
+      })
+
+      console.log("SENHAS", password, passwordAgain)
+
+      if (password !== passwordAgain) return Swal.fire({
+        icon: 'warning',
+        title: 'Senhas não coincidem',
+        text: 'Por favor, digite novamente !',
+      })
+
+
+      try {
+
+        const signUpUrl = document.querySelector('.sign-up-url-input').value
+        console.log(signUpUrl)
+
+
+        const myHeaders = new Headers()
+
+        myHeaders.append('Content-Type', 'application/json')
+        myHeaders.append('Accept', 'application/json')
+        myHeaders.append('Access-Control-Allow-Origin', '*')
+
+        await fetch(signUpUrl, {
+
+          method: 'PATCH',
+          headers: myHeaders,
+          mode: 'cors',
+          cache: 'default',
+          body: JSON.stringify({ name, username, email, password})
+        })
+
+      } catch (error) {
+        console.error(error)
+      }
+
+
+
+
+
+    })
+  </script>
+
+</body>
+
+
+</html>

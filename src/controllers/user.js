@@ -32,17 +32,19 @@ module.exports = {
   },
   async login(req, res) {
     try {
+      const {email, password} = req.body
 
-      const { confirmed, receivedEmail } =  await User.find({email}) 
+      const { confirmed, receivedEmail } =  await User.findOne({email}) 
 
-      if(!receivedEmail) return res.json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
 
-      if(!confirmed) return res.json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
+      if(!receivedEmail) return res.status(500).json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
+
+      if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
 
 
       const user = await User.findByCredentials(
-        req.body.email,
-        req.body.password
+        email,
+        password
       );
       const token = await user.generateAuthToken();
       res.status(200).send({
@@ -52,6 +54,7 @@ module.exports = {
 
       console.log(token);
     } catch (e) {
+      console.error(e)
       res.status(400).send();
     }
   },
@@ -75,6 +78,36 @@ module.exports = {
       res.status(500).send();
     }
   },
+
+  async finishSignUp (req, res){
+
+    try {
+      
+      const {name, password, username, email} = req.body
+      const user = await User.findOne({email});
+
+      if(!user) return res.status(400).json({message:'Usuario não cadastrado'});
+      if(user.confirmed) return res.status(400).json({message:'Cadastro já finalizado'});
+
+  
+      user.username = username
+      user.password = password
+      user.name = name
+      user.confirmed = true
+  
+      await user.save()
+
+    return res.status(201).json({message:'Cadastro Finalizado com sucesso'});
+
+    } catch (error) {
+
+      console.error(error)
+      
+    }
+
+
+
+  }
 
 };
 
