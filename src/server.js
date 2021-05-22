@@ -16,6 +16,14 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
+app.get('/',(request, response)=>{
+
+    response.json({
+        message:'API is running !'
+    })
+
+})
+
 emailJob.start()
 
 
