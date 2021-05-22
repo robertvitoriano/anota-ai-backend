@@ -1,9 +1,11 @@
 const emailController = require('./../controllers/email')
 
-const EmailRouter = require('express').Router()
+const emailRouter = require('express').Router()
 
 
 
-EmailRouter.post('email/confirmation/:userId', emailController.confirmEmail);
+emailRouter.patch('/email/confirmation/:userId', emailController.confirmEmail);
 
-EmailRouter.get('email/signup/:userId', emailController.renderSignupPage);
+emailRouter.get('/email/signup/:userId', emailController.renderSignupPage);
+
+module.exports =  emailRouter
