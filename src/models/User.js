@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema({
 
     username: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     name: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     email: {
@@ -32,12 +32,12 @@ const userSchema = new mongoose.Schema({
     receivedEmail:{
         type:Boolean,
         required: true,
-        default:true
+        default:false
 
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     notesId: [{
         type: Schema.Types.ObjectId,
@@ -79,6 +79,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
+
+    if(!user.password) return
 
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)

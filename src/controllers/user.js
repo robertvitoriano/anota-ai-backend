@@ -4,21 +4,23 @@ const auth = require("../middleware/auth");
 module.exports = {
   async store(req, res) {
     const users = await User.find();
-    
+
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
     });
 
     if (emailExists.length === 0) {
       try {
-        const user = new User({...req.body, receivedEmail:false});
+        const user = new User({ ...req.body, receivedEmail: false });
         await user.save();
         const token = await user.generateAuthToken();
 
-        res.status(201).send({
-          token,
-          user,
-        });
+        if (!req.body.password)
+          return res.status(201).send({
+            token,
+            user,
+            message:`Em breve um E-mail será  enviado para ${user.email}`
+          });
       } catch (e) {
         res.status(400).send(e);
         console.log(e);
@@ -55,21 +57,18 @@ module.exports = {
       console.log(error);
     }
   },
-    async logout(req, res) {
-        try {
-            console.log(req.body.headers);
-            auth ='apagado';
-            await req.user.save();
-            res.send()
-        } catch (error) {
+  async logout(req, res) {
+    try {
+      console.log(req.body.headers);
+      auth = "apagado";
+      await req.user.save();
+      res.send();
+    } catch (error) {
+      res.status(500).send();
+    }
+  },
 
-            res.status(500).send();
-        }
-
-    },
-
+  async storeEmail(req, res) {},
 };
-
-
 
 //dfdf

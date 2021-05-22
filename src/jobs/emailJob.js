@@ -29,7 +29,8 @@ const emailJob =  new CronJob('* * * * *', async () => {
                 from: EMAIL,
                 to: user.email,
                 subject: 'Confirme seu Email',
-                text: 'Código de verificação'
+                text: 'Código de verificação',
+                html: ''
             };
 
             transporter.sendMail(mailOptions, async  (error, info) =>{
@@ -37,7 +38,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
                 if (error) return  console.log(error);
                 
                    user.receivedEmail = true
-                   
+
                    console.log(`Email sent to ${user.email}`)
 
                    await user.save()
