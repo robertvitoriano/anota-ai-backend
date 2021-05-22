@@ -33,9 +33,12 @@ module.exports = {
   async login(req, res) {
     try {
 
-      const { receivedEmail } =  await User.find({email}) 
+      const { confirmed, receivedEmail } =  await User.find({email}) 
 
-      if(!receivedEmail) return res.json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, tente novamente"})
+      if(!receivedEmail) return res.json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
+
+      if(!confirmed) return res.json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
+
 
       const user = await User.findByCredentials(
         req.body.email,
@@ -73,7 +76,24 @@ module.exports = {
     }
   },
 
-  async storeEmail(req, res) {},
+  async confirmEmail(req, res) {
+
+    const { email } = req.body
+
+    const user = User.find(email)
+
+    if(user.confirmed) return res.send.json({message:"Você já confirmou esse e-mail. Va em frente e faça seu login !"})
+
+    user.confirmed = true
+
+    await user.save()
+  
+    res.send.json({message:"Email confirmado com sucesso !"})
+
+
+
+
+  },
 };
 
 //dfdf

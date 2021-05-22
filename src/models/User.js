@@ -12,6 +12,12 @@ const userSchema = new mongoose.Schema({
         required: false,
         trim: true
     },
+    confirmed:{
+        type: Boolean,
+        required: false,
+        default:false
+    }
+    ,
     name: {
         type: String,
         required: false,

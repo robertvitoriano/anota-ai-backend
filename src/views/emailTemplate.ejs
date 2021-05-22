@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<div>
+  <div id="confirmation-url">
+    <%confirmationUrl%>
+  </div>
+  <h1>Por favor, clique no link abaixo para confirmar seu email</h1>
+  <a href="#">Confirmar Cadastro</a>
+  <script>
+    const confirmationLink = document.querySelector('a')
+    confirmationLink.addEventListener('click', async () => {
+
+      const myHeaders = new Headers()
+
+      
+      const confirmationUrl = document.getElementById('confirmation-url').innerHTML
+      
+      try {
+        
+        await fetch(confirmationUrl, {
+          method: 'PATCH',
+          mode: 'cors',
+          cache: 'default',
+        })
+        
+        window.location. href = "https://web.whatsapp.com/"
+
+
+      } catch (error) {
+
+      }
+
+
+
+    })
+  </script>
+
+</div>
