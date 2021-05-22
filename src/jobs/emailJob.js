@@ -6,15 +6,13 @@ const User = require('./../models/User')
 const emailJob =  new CronJob('* * * * *', async () => {
     console.log(`CronJob Email Working...`)
 
+    const users = (await User.find()).filter((user)=>!user.receivedEmail);
 
-    const users = await User.find();
 
     for (const user of users) {
         console.log(`CronJob Email checking user ${user.name}`)
 
-        if (user.receivedEmail === false) {
-
-            console.log(`Trying to send Email to ${user.email}`)
+        console.log(`Trying to send Email to ${user.email}`)
 
             const transporter = mailer.createTransport({
                 service: 'gmail',
@@ -34,16 +32,13 @@ const emailJob =  new CronJob('* * * * *', async () => {
             };
 
             transporter.sendMail(mailOptions, async  (error, info) =>{
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                    user.receivedEmail = true
+                if (error) return  console.log(error);
+                
+                   console.log('Email sent: ' + info.response);
+                   user.receivedEmail = true
                    await user.save()
-                }
-
             })
-        }
+        
     }
 })
 module.exports =  emailJob 
