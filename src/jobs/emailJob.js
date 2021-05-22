@@ -4,9 +4,10 @@ const CronJob= require('cron').CronJob
 const mailer = require('nodemailer')
 const User = require('./../models/User')
 const emailJob =  new CronJob('* * * * *', async () => {
-    console.log(`CronJob Email Working...`)
 
     const users = (await User.find()).filter((user)=>!user.receivedEmail);
+
+    if(users.length === 0) return 
 
 
     for (const user of users) {
@@ -17,7 +18,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
             const transporter = mailer.createTransport({
                 service: 'gmail',
                 port: 465,
-                secure: true, // true for 465, false for other ports
+                secure: true, 
                 auth: {
                     user: EMAIL,
                     pass: EMAIL_PASSWORD
@@ -32,10 +33,13 @@ const emailJob =  new CronJob('* * * * *', async () => {
             };
 
             transporter.sendMail(mailOptions, async  (error, info) =>{
+
                 if (error) return  console.log(error);
                 
-                   console.log('Email sent: ' + info.response);
                    user.receivedEmail = true
+                   
+                   console.log(`Email sent to ${user.email}`)
+
                    await user.save()
             })
         
