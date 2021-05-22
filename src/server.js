@@ -13,8 +13,6 @@ require('./database/connection');
 app = express();
 
 app.use(cors());
-app.use(express.json());
-app.use(router);
 
 app.get('/',(request, response)=>{
 
@@ -23,6 +21,9 @@ app.get('/',(request, response)=>{
     })
 
 })
+app.use(express.json());
+app.use(router);
+
 
 emailJob.start()
 
