@@ -5,6 +5,7 @@ module.exports = {
   async store(req, res) {
     const users = await User.find();
 
+
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
     });
@@ -22,8 +23,8 @@ module.exports = {
             message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
       } catch (e) {
-        res.status(400).send(e);
-        console.log(e);
+        console.error(e);
+        return res.status(400).send(e);
       }
     } else {
       res.status(400).send({ message: "Email already taken!" });
