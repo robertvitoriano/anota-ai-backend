@@ -1,4 +1,7 @@
+const path = require('path') 
+const morgan = require('morgan')
 const {PORT} =  require('../config/variables')
+
 
 express = require('express');
 
@@ -11,6 +14,7 @@ const emailJob  = require('./jobs/emailJob')
 require('./database/connection');
 
 app = express();
+app.use(morgan(":method :url :response-time  :status"))
 
 app.use(cors());
 
@@ -21,6 +25,11 @@ app.get('/',(request, response)=>{
     })
 
 })
+
+app.set('views',path.join(__dirname+'/views/'));
+
+app.set('view engine', 'ejs');
+
 app.use(express.json());
 app.use(router);
 
