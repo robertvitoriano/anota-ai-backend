@@ -8,6 +8,7 @@ module.exports = {
       const { userId } = req.params
 
       const user = await User.findById(userId)
+     if(!user) return res.status(404).json({message:'user not found'});
 
 
       res.render('signUpTemplate.ejs', { email: user.email, signUpUrl:`${API_URL}/users` });
