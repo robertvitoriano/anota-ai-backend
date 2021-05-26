@@ -4,12 +4,10 @@ const auth = require("../middleware/auth");
 module.exports = {
   async store(req, res) {
 
-   console.log('DADOS DE CRIAÇÃO ', req.body)
 
   try{
 
     const users = await User.find();
-    console.log('usuarios emcomtrados ')
 
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
