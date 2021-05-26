@@ -9,15 +9,19 @@ module.exports = {
   try{
 
     const users = await User.find();
-    
+    console.log('usuarios emcomtrados ')
+
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
     });
+
+    console.log('verificando existencia de email')
 
     if (emailExists.length === 0) {
         const user = new User({ ...req.body, receivedEmail: false });
         await user.save();
         const token = await user.generateAuthToken();
+        console.log('gerando token caso usuario não exista')
 
         if (!req.body.password)
           return res.status(201).send({
@@ -25,6 +29,8 @@ module.exports = {
             user,
             message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
+
+          
 
     } else {
       res.status(400).send({ message: "Email already taken!" });
