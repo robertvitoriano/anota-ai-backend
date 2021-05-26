@@ -3,15 +3,18 @@ const auth = require("../middleware/auth");
 
 module.exports = {
   async store(req, res) {
+
+   console.log('DADOS DE CRIAÇÃO ', req.body)
+
+  try{
+
     const users = await User.find();
-
-
+    
     const emailExists = users.filter((user) => {
       user.email === req.body.email;
     });
 
     if (emailExists.length === 0) {
-      try {
         const user = new User({ ...req.body, receivedEmail: false });
         await user.save();
         const token = await user.generateAuthToken();
@@ -22,14 +25,16 @@ module.exports = {
             user,
             message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
-      } catch (e) {
-        console.error(e);
-        return res.status(400).send(e);
-      }
+
     } else {
       res.status(400).send({ message: "Email already taken!" });
       console.log("Email already taken");
     }
+  }catch(e){
+    console.error(e);
+    return res.status(400).send(e);
+  
+  }
   },
   async login(req, res) {
     try {
