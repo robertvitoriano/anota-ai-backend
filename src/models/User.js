@@ -39,7 +39,11 @@ const userSchema = new mongoose.Schema({
         type:Boolean,
         required: true,
         default:false
-
+    },
+    emailAttempts:{
+     type:Number,
+     required:false,
+     default:0
     },
     password: {
         type: String,

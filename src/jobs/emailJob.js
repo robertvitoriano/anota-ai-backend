@@ -36,8 +36,18 @@ const emailJob =  new CronJob('* * * * *', async () => {
                     text: 'Código de verificação',
                     html: String(data)
                 }, async  (error, info) =>{
+
+                    if(user.emailAttempts >= 5 ) return await User.deleteOne({ _id: user._id });
     
-                    if (error) return  console.error(error);
+                    if (error) {
+
+                      console.error(error);
+
+                      user.emailAttempts++
+
+                      return  await user.save()
+
+                    }
                     
                        user.receivedEmail = true
     
