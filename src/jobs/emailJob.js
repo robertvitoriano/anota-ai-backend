@@ -25,6 +25,7 @@ const emailJob =  new CronJob('* * * * *', async () => {
                     pass: EMAIL_PASSWORD
                 }
             });
+            
             ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `${API_URL}/email/signup/${user._id}`}, (err, data) => {
 
                 if (err)  return  console.error(err);
