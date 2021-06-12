@@ -49,7 +49,6 @@ const emailJob =  new CronJob('* * * * *', async () => {
                       return  await user.save()
 
                     }
-                    
                        user.receivedEmail = true
     
                        console.log(`Email sent to ${user.email}`)
