@@ -5,6 +5,7 @@ const { EMAIL, EMAIL_PASSWORD } = require('./../../config/variables')
 const mailer = require('nodemailer')
 const User = require('./../models/User')
 const { API_URL } = require('./../../config/variables')
+
 const emailJob =  new CronJob('*/30 * * * * *', async () => {
 
     const users = (await User.find()).filter((user)=>!user.receivedEmail);
