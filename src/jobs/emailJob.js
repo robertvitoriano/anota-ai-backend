@@ -6,7 +6,7 @@ const mailer = require('nodemailer')
 const User = require('./../models/User')
 const { API_URL } = require('./../../config/variables')
 
-const emailJob =  new CronJob('*/30 * * * * *', async () => {
+const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
     const users = (await User.find()).filter((user)=>!user.receivedEmail);
 
@@ -44,6 +44,8 @@ const emailJob =  new CronJob('*/30 * * * * *', async () => {
                     if (error) {
 
                       console.error(error);
+
+                      user.receivedEmail = false
 
                       user.emailAttempts++
 
