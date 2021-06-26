@@ -45,8 +45,6 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
                       console.error(error);
 
-                      user.receivedEmail = false
-
                       user.emailAttempts++
 
                       return  await user.save()
