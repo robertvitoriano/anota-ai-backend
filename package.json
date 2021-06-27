@@ -4,12 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js --ignore __tests__",
+    "dev": "nodemon src/server.js --ignore __tests__ ",
     "start": "node src/server.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "dependencies": {
-    "await-to-js": "^2.1.1",
+    "await-to-js": "^3.0.0",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -21,6 +21,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7",
+    "supertest": "^6.1.3",
     "validator": "^13.1.1"
   },
   "devDependencies": {

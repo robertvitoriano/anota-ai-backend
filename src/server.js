@@ -1,8 +1,8 @@
 const app = require('./app')
+const { PORT } = require('../config/variables')
+const truncate = require('./../__tests__/utils/truncate')
 
-const { PORT }=  require('../config/variables')
+app.listen(PORT, async () => {
 
-
-app.listen(PORT,()=>{
-  console.log("My App is running on port "+  PORT );
+  console.log("My App is running on port " + PORT);
 })
