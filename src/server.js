@@ -1,5 +1,4 @@
 const app = require('./app')
-const truncate = require('./../__tests__/utils/truncate.js')
 const { PORT } = require('../config/variables')
 
 
