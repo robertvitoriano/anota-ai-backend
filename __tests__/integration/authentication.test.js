@@ -30,7 +30,7 @@ describe('Authentication', () => {
   });
 
 
-  it('should not be able to authenticate after email is confirmed', async()=>{
+  it('should be able to authenticate after email is confirmed', async()=>{
     const user  = await User.create({name:'Robert da Silva Vitoriano', password:'123', email:'robertvitoriano@gmail.com', username:'robertvitoriano'})
     user.confirmed = true
     user.receivedEmail = true
