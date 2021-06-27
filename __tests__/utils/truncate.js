@@ -1,10 +1,22 @@
 const  models  = require('./../../src/models')
 
 
-module.exports = ()=>{
-  
-  return Promise.all(Object.keys(models).map((model)=>{
-    return models[model].collection.drop();
-  }))
+module.exports = async()=>{
+
+  for ( let model of Object.keys(models) ) {
+    try {
+      await models[String(model)].collection.drop();
+    } catch (e) {
+      if (e.code === 26) {
+        console.log('namespace %s not found',models[String(model)].collection.name)
+      } else {
+        throw e;
+      }
+    }
+}
 
 }
+  
+ 
+
+

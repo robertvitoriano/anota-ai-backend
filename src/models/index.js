@@ -1,9 +1,9 @@
-const user  = require('./User')
-const note  = require('./Note')
-const category = require('./Category')
+const User  = require('./User')
+const Note  = require('./Note')
+const Category = require('./Category')
 
 
 
 module.exports = {
-  note, user, category
+  Note, User, Category
 }
