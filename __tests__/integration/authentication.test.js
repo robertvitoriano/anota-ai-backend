@@ -68,7 +68,9 @@ describe('Authentication', () => {
       .post('/users/login')
       .send({ email: user.email, password: '123' })
 
-    expect(response.status).toBe(200)
+
+
+    expect(response.body).toHaveProperty('token')
   });
 
 });
