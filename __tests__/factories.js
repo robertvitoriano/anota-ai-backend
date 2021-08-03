@@ -1,0 +1,1 @@
+const { factory } = require('factory-girl')
