@@ -1,7 +1,7 @@
 const path = require('path')
 const CronJob= require('cron').CronJob
 const ejs = require('ejs')
-const { EMAIL, EMAIL_PASSWORD } = require('./../../config/variables') 
+const { EMAIL, EMAIL_PASSWORD, EMAIL_SERVICE } = require('./../../config/variables') 
 const mailer = require('nodemailer')
 const User = require('./../models/User')
 const { API_URL } = require('./../../config/variables')
@@ -18,7 +18,7 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         console.log(`Trying to send Email to ${user.email}`)
 
             const transporter = mailer.createTransport({
-                service: 'gmail',
+                service: EMAIL_SERVICE,
                 port: 465,
                 secure: true, 
                 auth: {
