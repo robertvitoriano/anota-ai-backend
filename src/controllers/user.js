@@ -44,20 +44,26 @@ module.exports = {
   },
   async login(req, res) {
     try {
-      const {email, password} = req.body
+      const {email, password, username} = req.body
+     
+     if(email){
+        const { confirmed, receivedEmail } =  await User.findOne({email})
 
-      const { confirmed, receivedEmail } =  await User.findOne({email}) 
+        if(!receivedEmail) return res.status(500).json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
 
+        if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
+      
+      }
+      if(username){
+        const { confirmed, receivedEmail } =  await User.findOne({username})
 
-      if(!receivedEmail) return res.status(500).json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
+        if(!receivedEmail) return res.status(500).json({message:"Você ainda não recebeu seu e-mail ! Por favor, aguarde mais um pouco."})
 
-      if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
+        if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
+      
+      }
 
-
-      const user = await User.findByCredentials(
-        email,
-        password
-      );
+      const user = await User.findByCredentials({email, password, username});
       const token = await user.generateAuthToken();
       res.status(200).send({
         token,
