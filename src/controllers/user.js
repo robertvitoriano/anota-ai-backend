@@ -7,6 +7,8 @@ module.exports = {
 
   try{
 
+    console.log('REQUEST ', req.body)
+
     const users = await User.find();
 
     const emailExists = users.filter((user) => {

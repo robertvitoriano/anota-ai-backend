@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js --ignore __tests__ ",
+    "dev": "cross-env ENVIRONMENT=development nodemon   src/server.js --ignore __tests__ ",
     "start": "node src/server.js",
     "test": "jest --detectOpenHandles",
-    "pretest": " cross-env ENVIRONMENT=test jest"
+    "pretest": "cross-env ENVIRONMENT=test jest"
   },
   "dependencies": {
     "await-to-js": "^3.0.0",
