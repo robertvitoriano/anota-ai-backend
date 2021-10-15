@@ -78,10 +78,10 @@ module.exports = {
   },
 
   async index(req, res) {
-    //do middleware auth
+
     try {
-      const users = await User.find();
-      res.send(users);
+      const user = req.user;
+      res.send(user);
     } catch (error) {
       console.log(error);
     }
