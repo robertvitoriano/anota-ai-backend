@@ -6,7 +6,6 @@ module.exports = {
     const user = req.user;
     const { title, body } = req.body;
     const note = new Note({ title, body, authorId: user._id });
-
     await note.save();
     const loggedUser = await User.findById(user._id);
     await loggedUser.notesId.push(note._id);
