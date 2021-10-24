@@ -13,3 +13,5 @@ switch(process.env.ENVIRONMENT){
 }
 
 }
+
+module.exports = getMongoUrl();
