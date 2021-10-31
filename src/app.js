@@ -18,11 +18,9 @@ app.use(cors());
 
 app.get('/',(request, response)=>{
     
-
     response.json({
         message:'API is running !'
     })
-
 })
 
 app.set('views',path.join(__dirname+'/views/'));
@@ -34,6 +32,5 @@ app.use(express.json());
 app.use(router);
 
 emailJob.start()
-
 
 module.exports = app

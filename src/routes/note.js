@@ -8,7 +8,4 @@ noteRouter.post('/notes/:id', auth, noteController.update);
 noteRouter.get('/notes/:id', auth, noteController.read);
 noteRouter.delete('/notes/:id', auth, noteController.delete);
 
-
-
-
 module.exports = noteRouter;

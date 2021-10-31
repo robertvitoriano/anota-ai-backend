@@ -16,11 +16,8 @@ const auth = async (req, res, next) => {
         req.user = user;
         
         next();
-    }
-
-    catch (e) {
+    }catch (e) {
         res.status(401).json({ ErrorMessage: e });
-
     }
 };
 
