@@ -3,11 +3,11 @@ const getMongoUrl = () =>{
 
 switch(process.env.ENVIRONMENT){
     case 'development':
-        mongoConnection = "mongodb+srv://robertvitoriano:80spCVu8Ik8KzSRg@cluster0.btwq6.mongodb.net/anota-ai-development?retryWrites=true&w=majority"
-        return mongoConnection
+         mongoConnection = "put your development mongo url here"       
+         return mongoConnection
     case 'test':
-        mongoConnection = "mongodb+srv://robertvitoriano:80spCVu8Ik8KzSRg@cluster0.btwq6.mongodb.net/anota-ai-test?retryWrites=true&w=majority"
-        return mongoConnection
+      mongoConnection = "put your tests mongo url here"
+      return mongoConnection
     default :
       return ''
 }
