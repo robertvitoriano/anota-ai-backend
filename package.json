@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env ENVIRONMENT=development nodemon   src/server.js --ignore __tests__ ",
+    "start": "node src/server.js",
     "test": "jest --detectOpenHandles",
     "pretest": "cross-env ENVIRONMENT=test jest"
   },
