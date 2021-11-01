@@ -1,4 +1,4 @@
 node_modules
 config/local_variables.js
 .vercel
-config/utils/getMongoUrl.js
+/config/utils/getMongoUrl.js
