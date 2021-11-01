@@ -1,6 +1,5 @@
 const getMongoUrl = () =>{
     let mongoConnection = ''
-    // 80spCVu8Ik8KzSRg
   switch(process.env.ENVIRONMENT){
       case 'development':
           mongoConnection = ""
