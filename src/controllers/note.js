@@ -1,5 +1,6 @@
 const Note = require("../models/Note");
 const User = require("../models/User");
+const Category = require("../models/Category");
 
 module.exports = {
   async store(req, res) {
@@ -38,7 +39,12 @@ module.exports = {
   async read(req, res) {
     try {
       const note = await Note.findById(req.params.id);
-      res.send(note);
+      console.log(note);
+      if (note.categoryId) {
+        const category = await Category.findById(note.categoryId);
+        return res.send({ ...note._doc, categoryName:category.name });
+      }
+      return res.send(note);
     } catch (e) {
       res.status(400).send(e);
     }
