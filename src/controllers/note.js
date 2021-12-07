@@ -27,8 +27,8 @@ module.exports = {
   async update(req, res) {
     try {
       const note = await Note.findById(req.params.id);
-      note.title = req.body.title;
-      note.body = req.body.body;
+      const { title, body, categoryId } = req.body;
+      Object.assign(note, { title, body, categoryId });
       await note.save();
       return res.send(note);
     } catch (e) {
