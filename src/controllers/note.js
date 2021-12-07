@@ -5,12 +5,12 @@ module.exports = {
   async store(req, res) {
     const user = req.user;
     const { title, body } = req.body;
-    const note = new Note({ title, body, authorId: user._id });
+    const note = new Note({ title, body, authorId: user._id, categoryId: req.body.categoryId });
     await note.save();
     const loggedUser = await User.findById(user._id);
     await loggedUser.notesId.push(note._id);
     await loggedUser.save();
-    res.send(note);
+    res.status(201).send(note);
   },
 
   async index(req, res) {
