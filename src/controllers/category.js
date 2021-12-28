@@ -58,32 +58,26 @@ module.exports = {
       };
 
       const notes = await Promise.all(findAllNotes(notesId));
-      
+
       const updatedNotes = notes.map((note) => {
         note.categoryId = categoryId;
         return note;
       });
       await Promise.all(saveNotes(updatedNotes));
 
-
       res.send(updatedNotes);
-    } catch {}
+    } catch { }
   },
   async remove(req, res) {
     try {
-      const { notesId } = req.body;
-      const removeFromCategory = (notesId) => {
+      const { categoryId } = req.params;
 
-        return notesId.map((id) => {
-          return NoteModel.findOneAndUpdate({_id:id},{categoryId:null}).exec();
+      await NoteModel.updateMany({"categoryId": categoryId}, {"$set":{"categoryId": null}});
 
-        });
-      };
+      await CategoryModel.deleteOne({ _id: categoryId });
 
-      const notes = await Promise.all(removeFromCategory(notesId));
-
-      res.send(notes);
-    } catch(e) {
+      res.status(200).send({message:'Category removed'});
+    } catch (e) {
       console.log(e);
 
     }
