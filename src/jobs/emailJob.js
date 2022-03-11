@@ -18,6 +18,7 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         console.log(`Trying to send Email to ${user.email}`)
 
             const transporter = mailer.createTransport({
+                host: 'smtp.gmail.com',
                 service: EMAIL_SERVICE,
                 port: 465,
                 secure: true, 
