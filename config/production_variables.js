@@ -6,7 +6,8 @@ const variables = {
   EMAIL:process.env.EMAIL,
   EMAIL_SERVICE:process.env.EMAIL_SERVICE,
   SECRET_KEY: process.env.SECRET_KEY,
-  API_URL:process.env.API_URL
+  API_URL:process.env.API_URL,
+  HOST:process.env.HOST
 
 }
 

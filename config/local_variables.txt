@@ -20,6 +20,7 @@ const variables = {
     EMAIL:'',
     EMAIL_SERVICE:'',
     SECRET_KEY:'',
-    API_URL:''
+    API_URL:'',
+    HOST:'',
 }
 module.exports = variables
