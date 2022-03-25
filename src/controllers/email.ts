@@ -1,9 +1,10 @@
-const User = require('./../models/User')
-const path = require('path')
-const ejs = require('ejs')
+import User from '../models/User'
+import path from 'path'
+import ejs from 'ejs'
+import mailer from 'nodemailer'
 
-const { API_URL, EMAIL, EMAIL_PASSWORD, HOST } = require('./../../config/variables')
-module.exports = {
+import { API_URL, EMAIL, EMAIL_PASSWORD, HOST } from '../../config/variables'
+export default {
 
   async renderSignupPage(req, res) {
     try {
@@ -12,7 +13,6 @@ module.exports = {
 
       const user = await User.findById(userId)
       if (!user) return res.status(404).json({ message: 'user not found' });
-
 
       res.render('signUpTemplate.ejs', { email: user.email, signUpUrl: `${API_URL}/users` });
 
@@ -28,6 +28,7 @@ module.exports = {
       const { email } = req.body
 
       const user = User.find((user)=>user.email === email)
+      //@ts-ignore
       const token = user.generateAuthToken()
       
       console.log(`Trying to send Email to ${email}`)
@@ -59,7 +60,7 @@ module.exports = {
             return console.error(error);
           }
 
-          console.log(`Email sent to ${user.email}`)
+          console.log("Email sent to ${user.email}")
 
         })
 
@@ -71,7 +72,4 @@ module.exports = {
       res.status(400).send(error);
     }
   }
-
-
-
 }

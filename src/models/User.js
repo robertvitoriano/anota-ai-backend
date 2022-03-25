@@ -2,22 +2,22 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const  { SECRET_KEY } = require('./../../config/variables')
+const { SECRET_KEY } = require('./../../config/variables')
 
 const Schema = mongoose.Schema;
 
 
 const userSchema = new mongoose.Schema({
 
-    username: {  
+    username: {
         type: String,
         required: false,
         trim: true
     },
-    confirmed:{
+    confirmed: {
         type: Boolean,
         required: false,
-        default:false
+        default: false
     }
     ,
     name: {
@@ -37,15 +37,15 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    receivedEmail:{
-        type:Boolean,
+    receivedEmail: {
+        type: Boolean,
         required: true,
-        default:false
+        default: false
     },
-    emailAttempts:{
-     type:Number,
-     required:false,
-     default:0
+    emailAttempts: {
+        type: Number,
+        required: false,
+        default: 0
     },
     password: {
         type: String,
@@ -72,13 +72,13 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 //Acessível através do model
-userSchema.statics.findByCredentials = async ({email, password, username}) => {
-   
+userSchema.statics.findByCredentials = async ({ email, password, username }) => {
+
     let user;
 
-    if(email) user = await User.findOne({ email })
+    if (email) user = await User.findOne({ email })
 
-    if(username) user = await User.findOne({ username })
+    if (username) user = await User.findOne({ username })
 
     if (!user) {
         throw new Error('Unable to login');
@@ -97,15 +97,13 @@ userSchema.statics.findByCredentials = async ({email, password, username}) => {
 userSchema.pre('save', async function (next) {
     const user = this
 
-    if(!user.password) return
+    if (!user.password) return
 
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
     next()
 })
-
-
 
 const User = mongoose.model('User', userSchema);
 
