@@ -1,7 +1,7 @@
-import express from 'express';
-import userController  from '../controllers/user';
-import auth from '../middleware/auth'
+const express = require('express');
+const userController = require('../controllers/user');
 const userRouter = express.Router();
+const auth = require('../middleware/auth')
 
 //Sign LOG IN
 userRouter.post('/users', userController.store);
@@ -11,5 +11,5 @@ userRouter.get('/users', userController.index);
 userRouter.post('/users/logout', userController.logout);
 userRouter.patch('/users', userController.finishSignUp);
 
-export default userRouter; 
+module.exports = userRouter; 
 

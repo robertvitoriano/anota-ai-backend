@@ -1,6 +1,6 @@
-import  { SECRET_KEY } from '../../config/variables';
-import jwt from "jsonwebtoken";
-import User from '../models/User';
+const  { SECRET_KEY } = require('./../../config/variables')
+const jwt = require("jsonwebtoken");
+const User = require('../models/User');
 
 
 const auth = async (req, res, next) => {
@@ -21,4 +21,4 @@ const auth = async (req, res, next) => {
     }
 };
 
-export default auth;
+module.exports = auth;

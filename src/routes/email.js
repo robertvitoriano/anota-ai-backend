@@ -1,10 +1,9 @@
-import emailController from './../controllers/email'
+const emailController = require('./../controllers/email')
 
-import { Router } from 'express'
+const emailRouter = require('express').Router()
 
-const emailRouter = Router()
 
 emailRouter.get('/email/signup/:userId', emailController.renderSignupPage);
 emailRouter.post('/email/recover', emailController.sendRecoverEmail);
 
-export default  emailRouter
+module.exports =  emailRouter

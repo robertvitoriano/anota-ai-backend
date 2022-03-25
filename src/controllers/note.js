@@ -1,8 +1,8 @@
-import Note from "../models/Note"
-import User from "../models/User"
-import Category from "../models/Category"
+const Note = require("../models/Note");
+const User = require("../models/User");
+const Category = require("../models/Category");
 
-export default {
+module.exports = {
   async store(req, res) {
     const user = req.user;
     const { title, body } = req.body;
