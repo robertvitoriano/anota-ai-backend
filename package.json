@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "12.16.3"
+    "node": "16.14.2"
   },
   "scripts": {
     "dev": "cross-env ENVIRONMENT=development ts-node  src/server.ts --ignore __tests__ ",
