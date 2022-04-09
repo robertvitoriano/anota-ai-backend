@@ -1,8 +1,8 @@
-const Note = require("../models/Note");
-const User = require("../models/User");
-const Category = require("../models/Category");
+import Note from "../models/Note";
+import User from "../models/User";
+import Category from "../models/Category";
 
-module.exports = {
+class NoteController {
   async store(req, res) {
     const user = req.user;
     const { title, body } = req.body;
@@ -12,7 +12,7 @@ module.exports = {
     await loggedUser.notesId.push(note._id);
     await loggedUser.save();
     res.status(201).send(note);
-  },
+  }
 
   async index(req, res) {
     const user = req.user;
@@ -22,7 +22,7 @@ module.exports = {
     }
 
     return res.send(notes);
-  },
+  }
 
   async update(req, res) {
     try {
@@ -34,7 +34,7 @@ module.exports = {
     } catch (e) {
       res.status(400).send(e);
     }
-  },
+  }
 
   async read(req, res) {
     try {
@@ -48,7 +48,7 @@ module.exports = {
     } catch (e) {
       res.status(400).send(e);
     }
-  },
+  }
 
   async delete(req, res) {
     try {
@@ -57,5 +57,7 @@ module.exports = {
     } catch (e) {
       res.status(400).send(e);
     }
-  },
+  }
 };
+
+export default new NoteController()

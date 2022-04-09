@@ -1,13 +1,10 @@
-const User = require("../models/User");
-const auth = require("../middleware/auth");
+import User from "../models/User";
+import auth from "../middleware/auth";
 
-module.exports = {
+class UserController {
   async store(req, res) {
 
-
   try{
-
-    console.log('REQUEST ', req.body)
 
     const users = await User.find();
 
@@ -20,13 +17,15 @@ module.exports = {
     if (emailExists.length === 0) {
         const user = new User({ ...req.body, receivedEmail: false });
         await user.save();
+        //@ts-ignore
         const token = await user.generateAuthToken();
         console.log('gerando token caso usuario não exista')
 
         if (!req.body.password)
+        
           return res.status(201).send({
             token,
-            user,
+            user,                                                           //@ts-ignore
             message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
 
@@ -41,7 +40,7 @@ module.exports = {
     return res.status(400).send(e);
   
   }
-  },
+  }
   async login(req, res) {
     try {
       const {email, password, username} = req.body
@@ -62,8 +61,9 @@ module.exports = {
         if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
       
       }
-
+      //@ts-ignore
       const user = await User.findByCredentials({email, password, username});
+      //@ts-ignore
       const token = await user.generateAuthToken();
       res.status(200).send({
         token,
@@ -75,7 +75,7 @@ module.exports = {
       console.error(e)
       res.status(400).send();
     }
-  },
+  }
 
   async index(req, res) {
 
@@ -85,17 +85,15 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
   async logout(req, res) {
     try {
-      console.log(req.body.headers);
-      auth = "apagado";
       await req.user.save();
       res.send();
     } catch (error) {
       res.status(500).send();
     }
-  },
+  }
 
   async finishSignUp (req, res){
 
@@ -122,11 +120,8 @@ module.exports = {
       console.error(error)
       
     }
-
-
-
   }
 
 };
 
-//dfdf
+export default new UserController()
