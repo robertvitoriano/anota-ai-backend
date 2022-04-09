@@ -1,7 +1,7 @@
 import app from './app'
-import variables from '../config/variables'
+import { PORT } from '../config/variables'
 
-app.listen(variables.PORT, async () => {
+app.listen(PORT, async () => {
 
-  console.log("My App is running on port " + variables.default.PORT);
+  console.log("My App is running on port " + PORT);
 })
