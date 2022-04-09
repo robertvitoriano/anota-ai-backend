@@ -1,11 +1,12 @@
-const jwt = require("jsonwebtoken");
-const User = require('../models/User');
+import jwt from "jsonwebtoken";
+import User from '../models/User';
 
 
 const auth = async (req, res, next) => {
     try {
         const authToken = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(authToken, process.env.SECRET_KEY );
+        //@ts-ignore
         const user = await User.findOne({ _id: decoded._id });
 
          if(!user){
@@ -20,4 +21,4 @@ const auth = async (req, res, next) => {
     }
 };
 
-module.exports = auth;
+export default auth

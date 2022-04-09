@@ -1,8 +1,8 @@
-const express = require('express');
-const userController = require('../controllers/user');
-const userRouter = express.Router();
-const auth = require('../middleware/auth')
+import { Router } from 'express'
+import userController from '../controllers/user';
+import auth from '../middleware/auth'
 
+const userRouter = Router()
 //Sign LOG IN
 userRouter.post('/users', userController.store);
 userRouter.post('/users/login', userController.login);
@@ -11,5 +11,5 @@ userRouter.get('/users', userController.index);
 userRouter.post('/users/logout', userController.logout);
 userRouter.patch('/users', userController.finishSignUp);
 
-module.exports = userRouter; 
+export default userRouter
 
