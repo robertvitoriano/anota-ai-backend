@@ -12,4 +12,4 @@ const variables = {
 }
 
 
-module.exports =  variables
+export default variables

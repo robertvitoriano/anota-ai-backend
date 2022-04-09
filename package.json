@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "engines": { "node": "12.16.3" },
+  "engines": {
+    "node": "12.16.3"
+  },
   "scripts": {
-    "dev": "cross-env ENVIRONMENT=development ts-node   src/server.ts --ignore __tests__ ",
+    "dev": "cross-env ENVIRONMENT=development ts-node  src/server.ts --ignore __tests__ ",
     "start": "node build/src/server.js",
     "test": "jest --detectOpenHandles",
     "pretest": "cross-env ENVIRONMENT=test jest",
@@ -37,6 +39,7 @@
     "validator": "^13.1.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
     "jest": "^27.0.3"
   }
 }
