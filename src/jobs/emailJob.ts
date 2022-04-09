@@ -1,8 +1,8 @@
-const path = require('path')
-const CronJob= require('cron').CronJob
-const ejs = require('ejs')
-const mailer = require('nodemailer')
-const User = require('./../models/User')
+import path from 'path'
+import {CronJob} from 'cron'
+import ejs from 'ejs'
+import mailer from 'nodemailer'
+import User from '../models/User'
 
 const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
@@ -62,4 +62,4 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         
     }
 })
-module.exports =  emailJob 
+export default emailJob

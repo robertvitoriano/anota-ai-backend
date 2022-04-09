@@ -1,8 +1,9 @@
-const CategoryModel = require("./../models/Category");
-const UserModel = require("./../models/User");
-const NoteModel = require("./../models/Note");
+import CategoryModel from "../models/Category";
+import UserModel from "../models/User";
+import NoteModel from "../models/Note";
 
-module.exports = {
+class CategoryController {
+
   async store(req, res) {
     const user = req.user;
     const { name } = req.body;
@@ -19,7 +20,7 @@ module.exports = {
       console.log(e);
       res.status(400).send(e);
     }
-  },
+  }
 
   async index(req, res) {
     try {
@@ -30,7 +31,7 @@ module.exports = {
     } catch (error) {
       res.status(400).send(error);
     }
-  },
+  }
   async list(req, res) {
     const { user } = req;
     try {
@@ -40,7 +41,7 @@ module.exports = {
     } catch (e) {
       res.send(e);
     }
-  },
+  }
   async associate(req, res) {
     try {
       const { notesId } = req.body;
@@ -67,19 +68,22 @@ module.exports = {
 
       res.send(updatedNotes);
     } catch { }
-  },
+  }
   async remove(req, res) {
     try {
       const { categoryId } = req.params;
 
-      await NoteModel.updateMany({"categoryId": categoryId}, {"$set":{"categoryId": null}});
+      await NoteModel.updateMany({ "categoryId": categoryId }, { "$set": { "categoryId": null } });
 
       await CategoryModel.deleteOne({ _id: categoryId });
 
-      res.status(200).send({message:'Category removed'});
+      res.status(200).send({ message: 'Category removed' });
     } catch (e) {
       console.log(e);
 
     }
-  },
+  }
 };
+
+
+export default new CategoryController()

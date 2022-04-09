@@ -1,8 +1,9 @@
-const User = require('./../models/User')
-const path = require('path')
-const ejs = require('ejs')
+import User from '../models/User'
+import path from 'path'
+import ejs from 'ejs'
+import mailer from 'nodemailer'
 
-module.exports = {
+class EmailController{
 
   async renderSignupPage(req, res) {
     try {
@@ -19,26 +20,27 @@ module.exports = {
       console.error(error)
       res.status(400).send(error);
     }
-  },
+  }
 
   async sendRecoverEmail(req, res) {
     try {
 
       const { email } = req.body
 
-      const user = User.find((user)=>user.email === email)
+      const user = User.find((user:any)=>user.email === email)
+      //@ts-ignore
       const token = user.generateAuthToken()
       
       console.log(`Trying to send Email to ${email}`)
 
 
       const transporter = mailer.createTransport({
-        host:HOST,
+        host:process.env.HOST,
         port: 465,
         secure: true,
         auth: {
-          user: EMAIL,
-          pass: EMAIL_PASSWORD
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASSWORD
         }
       });
 
@@ -71,6 +73,6 @@ module.exports = {
     }
   }
 
-
-
 }
+
+export default new EmailController()
