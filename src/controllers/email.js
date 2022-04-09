@@ -2,7 +2,6 @@ const User = require('./../models/User')
 const path = require('path')
 const ejs = require('ejs')
 
-const { API_URL, EMAIL, EMAIL_PASSWORD, HOST } = require('./../../config/variables')
 module.exports = {
 
   async renderSignupPage(req, res) {
@@ -14,7 +13,7 @@ module.exports = {
       if (!user) return res.status(404).json({ message: 'user not found' });
 
 
-      res.render('signUpTemplate.ejs', { email: user.email, signUpUrl: `${API_URL}/users` });
+      res.render('signUpTemplate.ejs', { email: user.email, signUpUrl: `${process.env.API_URL}/users` });
 
     } catch (error) {
       console.error(error)
@@ -43,12 +42,12 @@ module.exports = {
         }
       });
 
-      ejs.renderFile(path.join(__dirname, '../views/', "recoverPasswordEmailTemplate.ejs"), { recoverUrl: `${API_URL}/email/recover/${token}` }, (err, data) => {
+      ejs.renderFile(path.join(__dirname, '../views/', "recoverPasswordEmailTemplate.ejs"), { recoverUrl: `${process.env.API_URL}/email/recover/${token}` }, (err, data) => {
 
         if (err) return console.error(err);
 
         transporter.sendMail({
-          from: EMAIL,
+          from: process.env.EMAIL,
           to: email,
           subject: 'Redefina sua Senha',
           text: 'Redefina sua senha',
