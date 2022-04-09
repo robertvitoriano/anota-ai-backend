@@ -4,3 +4,4 @@ config/local_variables.ts
 /config/utils/getMongoUrl.js
 config/local_variables.js
 build
+.env

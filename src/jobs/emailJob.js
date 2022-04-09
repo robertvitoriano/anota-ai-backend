@@ -1,10 +1,8 @@
 const path = require('path')
 const CronJob= require('cron').CronJob
 const ejs = require('ejs')
-const { EMAIL, EMAIL_PASSWORD, EMAIL_SERVICE, HOST } = require('./../../config/variables') 
 const mailer = require('nodemailer')
 const User = require('./../models/User')
-const { API_URL } = require('./../../config/variables')
 
 const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
@@ -18,21 +16,21 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         console.log(`Trying to send Email to ${user.email}`)
 
             const transporter = mailer.createTransport({
-                host: HOST,
+                host: process.env.HOST,
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: EMAIL,
-                    pass: EMAIL_PASSWORD
+                    user: process.env.EMAIL,
+                    pass: process.env.EMAIL_PASSWORD
                 }
               });
             
-            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `${API_URL}/email/signup/${user._id}`}, (err, data) => {
+            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `${process.env.API_URL}/email/signup/${user._id}`}, (err, data) => {
 
                 if (err)  return  console.error(err);
 
                 transporter.sendMail({
-                    from: EMAIL,
+                    from: process.env.EMAIL,
                     to: user.email,
                     subject: 'Confirme seu Email',
                     text: 'Código de verificação',

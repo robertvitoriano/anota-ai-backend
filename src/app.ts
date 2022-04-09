@@ -7,6 +7,8 @@ import cors from 'cors';
 import router from './routes/router.js';
 
 import emailJob  from './jobs/emailJob'
+import dotenv from 'dotenv'
+dotenv.config()
 
 import  './database/connection';
 
