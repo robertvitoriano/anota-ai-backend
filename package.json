@@ -11,9 +11,10 @@
     "start": "node build/src/server.js",
     "test": "jest --detectOpenHandles",
     "pretest": "cross-env ENVIRONMENT=test jest",
-    "postinstall": "tsc && copyfiles src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/ ",
+    "postinstall": "tsc && npm run copy-files",
+    "copy-files":"src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/",
     "watch-node": "nodemon build/src/server.js",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w && copy-files"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",
