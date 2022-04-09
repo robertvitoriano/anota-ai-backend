@@ -2,7 +2,6 @@ const User = require('./../models/User')
 const path = require('path')
 const ejs = require('ejs')
 
-const { API_URL, EMAIL, EMAIL_PASSWORD, HOST } = require('./../../config/variables')
 module.exports = {
 
   async renderSignupPage(req, res) {

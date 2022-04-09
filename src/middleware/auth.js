@@ -1,12 +1,11 @@
-import  variables from '../../config/variables'
-import jwt from "jsonwebtoken";
-import User from '../models/User';
+const jwt = require("jsonwebtoken");
+const User = require('../models/User');
 
 
 const auth = async (req, res, next) => {
     try {
         const authToken = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(authToken, variables.default.SECRET_KEY );
+        const decoded = jwt.verify(authToken, process.env.SECRET_KEY );
         const user = await User.findOne({ _id: decoded._id });
 
          if(!user){

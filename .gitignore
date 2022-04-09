@@ -3,3 +3,5 @@ config/local_variables.ts
 .vercel
 /config/utils/getMongoUrl.js
 config/local_variables.js
+build
+.env

@@ -1,9 +1,8 @@
-import path from 'path'
-import {CronJob} from 'cron'
-import ejs from 'ejs'
-import variables from '../../config/variables' 
-import mailer from 'nodemailer'
-import User from '../models/User'
+const path = require('path')
+const CronJob= require('cron').CronJob
+const ejs = require('ejs')
+const mailer = require('nodemailer')
+const User = require('./../models/User')
 
 const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
@@ -17,21 +16,21 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         console.log(`Trying to send Email to ${user.email}`)
 
             const transporter = mailer.createTransport({
-                host: variables.default.HOST,
+                host: process.env.HOST,
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    user: variables.default.EMAIL,
-                    pass: variables.default.EMAIL_PASSWORD
+                    user: process.env.EMAIL,
+                    pass: process.env.EMAIL_PASSWORD
                 }
               });
             
-            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `${variables.default.API_URL}/email/signup/${user._id}`}, (err, data) => {
+            ejs.renderFile(path.join(__dirname, '../views/', "emailTemplate.ejs"), {confirmationUrl: `${process.env.API_URL}/email/signup/${user._id}`}, (err, data) => {
 
                 if (err)  return  console.error(err);
 
                 transporter.sendMail({
-                    from: variables.default.EMAIL,
+                    from: process.env.EMAIL,
                     to: user.email,
                     subject: 'Confirme seu Email',
                     text: 'Código de verificação',
@@ -63,4 +62,4 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
         
     }
 })
-export default  emailJob 
+module.exports =  emailJob 

@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const  { SECRET_KEY } = require('./../../config/variables')
 
 const Schema = mongoose.Schema;
 
