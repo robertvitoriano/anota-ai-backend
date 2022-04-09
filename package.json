@@ -11,7 +11,7 @@
     "start": "node build/src/server.js",
     "test": "jest --detectOpenHandles",
     "pretest": "cross-env ENVIRONMENT=test jest",
-    "postinstall": "tsc && npm run copy-files",
+    "postinstall": "tsc && copyfiles src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/ ",
     "copy-files":"src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/",
     "watch-node": "nodemon build/src/server.js",
     "watch-ts": "tsc -w && copy-files"
