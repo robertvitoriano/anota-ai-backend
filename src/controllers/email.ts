@@ -28,11 +28,10 @@ class EmailController{
       const { email } = req.body
 
       const user = User.find((user:any)=>user.email === email)
-      //@ts-ignore
+      
       const token = user.generateAuthToken()
       
       console.log(`Trying to send Email to ${email}`)
-
 
       const transporter = mailer.createTransport({
         host:process.env.HOST,

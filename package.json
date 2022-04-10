@@ -7,19 +7,24 @@
     "node": "16.14.2"
   },
   "scripts": {
-    "dev": "cross-env ENVIRONMENT=development ts-node  src/server.ts --ignore __tests__ ",
+    "dev": "cross-env ENVIRONMENT=development ts-node --files  src/server.ts --ignore __tests__ ",
     "start": "node build/src/server.js",
     "test": "jest --detectOpenHandles",
     "pretest": "cross-env ENVIRONMENT=test jest",
     "postinstall": "tsc && copyfiles src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/ ",
-    "copy-files":"src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/",
+    "copy-files": "src/views/*.ejs src/views/assets/*.css src/views/*.jpg build/",
     "watch-node": "nodemon build/src/server.js",
     "watch-ts": "tsc -w && copy-files"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
+    "@types/cron": "^1.7.3",
+    "@types/ejs": "^3.1.0",
     "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
+    "@types/nodemailer": "^6.4.4",
     "await-to-js": "^3.0.0",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
