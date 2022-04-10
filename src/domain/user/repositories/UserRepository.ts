@@ -4,6 +4,13 @@ import { IUser, IUserCredentials } from './../types'
 class UserRepository implements IUserRepository {
 
   constructor(private userModel: typeof UserModel) { }
+
+  async update(data: any): Promise<IUser> {
+    const user = await this.userModel.updateOne({
+      email: data.email
+    }, data)
+    return user
+  }
   public async createUser(email: string): Promise<IUser> {
     const user = await this.userModel.create({
       email

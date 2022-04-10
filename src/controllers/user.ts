@@ -58,34 +58,6 @@ class UserController {
       res.status(500).send();
     }
   }
-
-  async finishSignUp (req, res){
-
-    try {
-      
-      const {name, password, username, email} = req.body
-      const user = await User.findOne({email});
-
-      if(!user) return res.status(400).json({message:'Usuario não cadastrado'});
-      if(user.confirmed) return res.status(400).json({message:'Cadastro já finalizado'});
-
-  
-      user.username = username
-      user.password = password
-      user.name = name
-      user.confirmed = true
-  
-      await user.save()
-
-    return res.status(201).json({message:'Cadastro Finalizado com sucesso'});
-
-    } catch (error) {
-
-      console.error(error)
-      
-    }
-  }
-
 };
 
 export default new UserController()
