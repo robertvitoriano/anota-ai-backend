@@ -26,7 +26,6 @@ class UserController {
         if(!confirmed) return res.status(500).json({message:"Você ainda não confirmou seu e-mail ! Assim que confirma-lo, por favor tente novamente."})
       
       }
-      //@ts-ignore
       const user = await User.findByCredentials({email, password, username});
       
       const token = await generateAuthToken(user._id.toString());
