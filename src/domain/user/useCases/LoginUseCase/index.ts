@@ -1,9 +1,7 @@
-import { UserRepository } from "../../repositories/UserRepository";
 import { LoginUseCase } from "./LoginUseCase";
 import {LoginController} from './LoginController'
-import { User as UserModel } from "../../../../models";
+import { userRepository } from "../../repositories/factories/UserRepositoryFactory";
 
-const userRepository = new UserRepository(UserModel);
 const loginUseCase = new LoginUseCase(userRepository);
 const loginController = new LoginController(loginUseCase)
 

@@ -1,15 +1,18 @@
 import UserModel from './../../../models/User';
 import { IUserRepository } from './IUserRepository'
 import { IUser, IUserCredentials } from './../types'
-import bcrypt from 'bcryptjs'
 class UserRepository implements IUserRepository {
 
   constructor(private userModel: typeof UserModel) { }
-  find({ email, username }: IUserCredentials): Promise<IUser> {
-    throw new Error('Method not implemented.');
+  public async createUser(email: string): Promise<IUser> {
+    const user = await this.userModel.create({
+      email
+    })
+    await user.save()
+    return user
   }
 
-  async findByCredentials({ email, username, password }: IUserCredentials): Promise<IUser> {
+  public async findByCredentials({ email, username, password }: IUserCredentials): Promise<IUser> {
 
     let user = null
 
@@ -24,12 +27,8 @@ class UserRepository implements IUserRepository {
       })
     }
 
-    if(!user){
-      throw new Error('User Not Found')
-    }
-
     return user
-   
+
   }
 }
 

@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema<IUserModel>({
     username: {  
         type: String,
         required: false,
-        trim: true
+        trim: true,
+        unique: true
     },
     confirmed:{
         type: Boolean,

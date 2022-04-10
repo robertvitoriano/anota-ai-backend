@@ -5,42 +5,6 @@ import { generateAuthToken } from './../utils'
 class UserController {
   async store(req, res) {
 
-  try{
-
-    const users = await User.find();
-
-    const emailExists = users.filter((user) => {
-      user.email === req.body.email;
-    });
-
-    console.log('verificando existencia de email')
-
-    if (emailExists.length === 0) {
-        const user = new User({ ...req.body, receivedEmail: false });
-        await user.save();
-        //@ts-ignore
-        const token = await user.generateAuthToken(user._id.toString());
-        console.log('gerando token caso usuario não exista')
-
-        if (!req.body.password)
-        
-          return res.status(201).send({
-            token,
-            user,                                                           
-            message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
-          });
-
-          
-
-    } else {
-      res.status(400).send({ message: "Email already taken!" });
-      console.log("Email already taken");
-    }
-  }catch(e){
-    console.error(e);
-    return res.status(400).send(e);
-  
-  }
   }
   async login(req, res) {
     try {
