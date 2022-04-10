@@ -1,12 +1,11 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
+import mongoose from 'mongoose'
+import validator from 'validator'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import {IUserModel} from './interfaces'
 const Schema = mongoose.Schema;
 
-
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<IUserModel>({
 
     username: {  
         type: String,
@@ -63,35 +62,6 @@ const userSchema = new mongoose.Schema({
         timestamps: true
     })
 
-//acessível em instancia
-userSchema.methods.generateAuthToken = async function () {
-    const user = this;
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY);
-    await user.save();
-    return token
-}
-//Acessível através do model
-userSchema.statics.findByCredentials = async ({email, password, username}) => {
-   
-    let user;
-
-    if(email) user = await User.findOne({ email })
-
-    if(username) user = await User.findOne({ username })
-
-    if (!user) {
-        throw new Error('Unable to login');
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-        throw new Error('Unable to login')
-    }
-
-    return user
-}
-
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
@@ -104,8 +74,6 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
-
-
 const User = mongoose.model('User', userSchema);
 
-module.exports = User
+export default User

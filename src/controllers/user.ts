@@ -1,5 +1,6 @@
 import User from "../models/User";
 import auth from "../middleware/auth";
+import { generateAuthToken } from './../utils'
 
 class UserController {
   async store(req, res) {
@@ -18,14 +19,14 @@ class UserController {
         const user = new User({ ...req.body, receivedEmail: false });
         await user.save();
         //@ts-ignore
-        const token = await user.generateAuthToken();
+        const token = await user.generateAuthToken(user._id.toString());
         console.log('gerando token caso usuario não exista')
 
         if (!req.body.password)
         
           return res.status(201).send({
             token,
-            user,                                                           //@ts-ignore
+            user,                                                           
             message:`Em breve um E-mail  de confirmação será  enviado para ${user.email}`
           });
 
@@ -63,8 +64,8 @@ class UserController {
       }
       //@ts-ignore
       const user = await User.findByCredentials({email, password, username});
-      //@ts-ignore
-      const token = await user.generateAuthToken();
+      
+      const token = await generateAuthToken(user._id.toString());
       res.status(200).send({
         token,
         user,
