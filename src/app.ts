@@ -6,7 +6,7 @@ import cors from 'cors';
 
 import router from './routes/router';
 
-import emailJob  from './jobs/emailJob'
+import emailJob  from './jobs/confirmEmailJob'
 import dotenv from 'dotenv'
 dotenv.config()
 

@@ -1,6 +1,5 @@
-import bcrypt from 'bcryptjs';
 import { IUserRepository } from "../../repositories/IUserRepository";
-
+import { encodePassword } from "./../../../../utils";
 class FinishSignUpUseCase {
   constructor(private userRepository: IUserRepository) { }
 
@@ -11,7 +10,7 @@ class FinishSignUpUseCase {
       if (!user) throw new Error('User not signed up !');
       if (user.confirmed) throw new Error('Cadastro já finalizado');
 
-      const encodedPassword = await this.encodePassword(password)
+      const encodedPassword = await encodePassword(password)
 
       await this.userRepository.update({
         name,
@@ -23,11 +22,6 @@ class FinishSignUpUseCase {
     } catch (error) {
       console.error(error)
     }
-  }
-
-  private async encodePassword(password: string): Promise<string> {
-    const encodedPassword = await bcrypt.hash(password, 8)
-    return encodedPassword
   }
 }
 

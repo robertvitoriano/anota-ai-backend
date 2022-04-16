@@ -4,7 +4,7 @@ import ejs from 'ejs'
 import mailer from 'nodemailer'
 import User from '../models/User'
 
-const emailJob =  new CronJob('*/10 * * * * *', async () => {
+const confirmEmailJob =  new CronJob('*/10 * * * * *', async () => {
 
     const users = (await User.find()).filter((user)=>!user.receivedEmail);
 
@@ -57,9 +57,6 @@ const emailJob =  new CronJob('*/10 * * * * *', async () => {
 
                 
             });
-
-            
-        
     }
 })
-export default emailJob
+export default confirmEmailJob
