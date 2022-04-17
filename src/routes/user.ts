@@ -3,7 +3,7 @@ import { loginController } from './../domain/user/useCases/LoginUseCase';
 import { createUserController } from './../domain/user/useCases/CreateUserUseCase'
 import { finishSignUpController } from './../domain/user/useCases/FinishSignUpUseCase'
 import { recoverPasswordController } from './../domain/user/useCases/RecoverPassworsUseCase'
-import { beginPasswordRecoveryController } from '../domain/user/useCases/BeginPasswordRecovery';
+import { beginPasswordRecoveryController } from '../domain/user/useCases/BeginPasswordRecoveryUseCase';
 
 import userController from './../controllers/user'
 import auth from '../middleware/auth'
