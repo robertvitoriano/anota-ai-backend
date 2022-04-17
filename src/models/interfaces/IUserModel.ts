@@ -12,4 +12,5 @@ export interface IUserModel extends Document {
   categoriesId: Array<string>
   createdAt:string
   updatedAt?:string
+  isRecoveringPassword:boolean
 }

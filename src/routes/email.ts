@@ -5,6 +5,6 @@ import {Router} from 'express'
 const emailRouter = Router()
 
 emailRouter.get('/email/signup/:userId', emailController.renderSignupPage);
-emailRouter.post('/email/recover', emailController.sendRecoverEmail);
+emailRouter.get('/email/recover/:userId', emailController.renderRecoverPasswordPage);
 
 export default emailRouter

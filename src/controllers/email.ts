@@ -3,7 +3,7 @@ import path from 'path'
 import ejs from 'ejs'
 import mailer from 'nodemailer'
 
-class EmailController{
+class EmailController {
 
   async renderSignupPage(req, res) {
     try {
@@ -22,49 +22,15 @@ class EmailController{
     }
   }
 
-  async sendRecoverEmail(req, res) {
+  async renderRecoverPasswordPage(req, res) {
     try {
 
-      const { email } = req.body
+      const { userId } = req.params
 
-      const user = User.find((user:any)=>user.email === email)
-      
-      const token = user.generateAuthToken()
-      
-      console.log(`Trying to send Email to ${email}`)
+      const user = await User.findById(userId)
+      if (!user) return res.status(404).json({ message: 'user not found' });
 
-      const transporter = mailer.createTransport({
-        host:process.env.HOST,
-        port: 465,
-        secure: true,
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.EMAIL_PASSWORD
-        }
-      });
-
-      ejs.renderFile(path.join(__dirname, '../views/', "recoverPasswordEmailTemplate.ejs"), { recoverUrl: `${process.env.API_URL}/email/recover/${token}` }, (err, data) => {
-
-        if (err) return console.error(err);
-
-        transporter.sendMail({
-          from: process.env.EMAIL,
-          to: email,
-          subject: 'Redefina sua Senha',
-          text: 'Redefina sua senha',
-          html: String(data)
-        }, async (error, info) => {
-
-          if (error) {
-            return console.error(error);
-          }
-
-          console.log(`Email sent to ${user.email}`)
-
-        })
-
-
-      });
+      res.render('recoverPasswordTemplate.ejs', { email: user.email, recoverPasswordUrl: `${process.env.API_URL}/users/recover-password` });
 
     } catch (error) {
       console.error(error)

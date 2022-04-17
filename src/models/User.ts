@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema<IUserModel>({
         required: true,
         default:false
     },
+    isRecoveringPassword:{
+        type:Boolean,
+        required: true,
+        default:false
+    },
     emailAttempts:{
      type:Number,
      required:false,

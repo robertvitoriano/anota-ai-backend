@@ -5,10 +5,17 @@ class UserRepository implements IUserRepository {
 
   constructor(private userModel: typeof UserModel) { }
 
-  async update(data: any): Promise<IUser> {
-    const user = await this.userModel.updateOne({
-      email: data.email
-    }, data)
+  async update(data:any): Promise<IUser> {
+    const user = await this.userModel.findOneAndUpdate({
+      email:data.email
+    }, {
+      ...data
+    },{
+      new:true,
+      useFindAndModify:false
+    })
+
+    await user.save()
     return user
   }
   public async createUser(email: string): Promise<IUser> {
@@ -19,7 +26,7 @@ class UserRepository implements IUserRepository {
     return user
   }
 
-  public async findByCredentials({ email, username, password }: IUserCredentials): Promise<IUser> {
+  public async findByCredentials({ email, username }: IUserCredentials): Promise<IUser> {
 
     let user = null
 
