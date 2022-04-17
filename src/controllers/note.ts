@@ -39,7 +39,6 @@ class NoteController {
   async read(req, res) {
     try {
       const note = await Note.findById(req.params.id);
-      console.log(note);
       if (note.categoryId) {
         const category = await Category.findById(note.categoryId);
         return res.send({ ...note._doc, categoryName:category.name });

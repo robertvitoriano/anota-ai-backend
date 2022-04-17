@@ -1,6 +1,5 @@
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserCredentials } from "../../types";
-import bcrypt from 'bcrypt'
 import { encodePassword } from "../../../../utils";
 class RecoverPasswordUseCase {
 
@@ -11,7 +10,7 @@ class RecoverPasswordUseCase {
 
   public async execute ({password, email}:IUserCredentials):Promise<void>{
 
-    const user = this.userRepository.findByCredentials({
+    const user = await this.userRepository.findByCredentials({
       email
     })
 
@@ -19,14 +18,10 @@ class RecoverPasswordUseCase {
 
       const encodedPassword = await encodePassword(password)
 
-      await this.userRepository.updatePassword({
+      await this.userRepository.update({
         email, password:encodedPassword
       })
     }
-
-
-
-
 
   }
 

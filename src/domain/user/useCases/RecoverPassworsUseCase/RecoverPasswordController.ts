@@ -7,10 +7,10 @@ class RecoverPasswordController {
 
   async handle(request: Request, response: Response):Promise<Response> {
 
-    const { password } = request.body
+    const { password, email } = request.body
 
     try {
-      await this.recoverPasswordUseCase.execute(password)
+      await this.recoverPasswordUseCase.execute({password, email})
 
       return response.status(201).json();
     } catch (error) {

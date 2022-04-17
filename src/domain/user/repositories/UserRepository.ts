@@ -4,16 +4,17 @@ import { IUser, IUserCredentials } from './../types'
 class UserRepository implements IUserRepository {
 
   constructor(private userModel: typeof UserModel) { }
-  updatePassword(data: any): Promise<IUser> {
-    throw new Error('Method not implemented.');
-  }
 
   async update(data:any): Promise<IUser> {
-    const user = await this.userModel.updateOne({
+    const user = await this.userModel.findOneAndUpdate({
       email:data.email
     }, {
       ...data
+    },{
+      new:true,
+      useFindAndModify:false
     })
+
     await user.save()
     return user
   }
