@@ -22,10 +22,7 @@ class RecoverPasswordUseCase {
         email, password:encodedPassword
       })
     }
-
   }
-
-
 }
 
 export {
