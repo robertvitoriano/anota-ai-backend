@@ -1,0 +1,2 @@
+- run application through docker:
+docker run -p 4000:4000 robertvitoriano/anota-ai:latest
